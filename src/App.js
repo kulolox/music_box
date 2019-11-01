@@ -1,29 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-const Home = React.lazy(() => import('@components/Home'));
-const HelloWorld = React.lazy(() => import('@components/HelloWorld'));
+import Home from '@pages/home';
+import Player from '@components/Player';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/helloworld">Hello World</Link>
-          </li>
-        </ul>
+    <React.Fragment>
+      <CssBaseline />
+      <Router>
         <React.Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/helloworld" component={HelloWorld} />
           </Switch>
         </React.Suspense>
-      </div>
-    </Router>
+      </Router>
+      <Player />
+    </React.Fragment>
   );
 }
 
