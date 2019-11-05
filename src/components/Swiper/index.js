@@ -60,7 +60,6 @@ export default function Swiper({ speed = 4000, navigation = false, children }) {
   // 轮播控制器
   let swiper = null;
   const getSwiper = ref => {
-    console.log(ref);
     swiper = ref;
   };
   const goNext = () => {

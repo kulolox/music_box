@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Swiper from '@src/components/Swiper';
-import NavTabs from './NavTabs';
+import Album from './Album';
+import Banner from './Banner';
 
 const useStyles = makeStyles(theme => ({
   home: {
@@ -14,14 +14,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home() {
   const classes = useStyles();
+
   return (
     <div className={classes.home}>
-      <Swiper speed={3000} navigation>
-        <div style={{ height: 300, background: 'green' }} />
-        <div style={{ height: 300, background: 'blue' }} />
-        <div style={{ height: 300, background: 'grey' }} />
-      </Swiper>
-      <NavTabs />
+      <Banner />
+      <Album />
     </div>
   );
 }
