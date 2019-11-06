@@ -7,10 +7,8 @@ import Duration from './Duration';
 
 const useStyles = makeStyles(theme => ({
   audioInfo: {
-    margin: '0 24px',
-    flex: 1,
     display: 'flex',
-    alignItems: 'center'
+    padding: '6px 0'
   },
   logo: {
     width: 34,
@@ -20,8 +18,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: 16
   },
   main: {
-    width: '100%',
-    marginTop: 5
+    width: '100%'
   },
   name: {
     fontSize: 12,

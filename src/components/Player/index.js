@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import ReactPlayer from 'react-player';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 import { inject, observer } from 'mobx-react';
 
 import AudioInfo from './AudioInfo';
@@ -22,10 +23,7 @@ const useStyles = makeStyles(theme => ({
     display: 'none'
   },
   content: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 47,
+    // height: 47,
     width: 980,
     margin: '0 auto'
   }
@@ -65,12 +63,20 @@ const Player = inject('playerModel')(
           onEnded={onEnded}
         />
         <div className={classes.content}>
-          {/* 播放功能区 */}
-          <Controller />
-          {/* 歌曲与进度 */}
-          <AudioInfo />
-          {/* 功能按钮区 */}
-          <Menu />
+          <Grid container spacing={1}>
+            <Grid item xs={2}>
+              {/* 播放功能区 */}
+              <Controller />
+            </Grid>
+            <Grid item xs={8}>
+              {/* 歌曲与进度 */}
+              <AudioInfo />
+            </Grid>
+            <Grid item xs={2}>
+              {/* 功能按钮区 */}
+              <Menu />
+            </Grid>
+          </Grid>
         </div>
       </Card>
     );

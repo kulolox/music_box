@@ -7,14 +7,7 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import { inject, observer } from 'mobx-react';
 
 const useStyles = makeStyles(theme => ({
-  controls: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  playIcon: {
-    height: 32,
-    width: 32
-  }
+  controls: {}
 }));
 
 const Controller = inject('playerModel')(
@@ -37,7 +30,7 @@ const Controller = inject('playerModel')(
           <SkipPreviousIcon />
         </IconButton>
         <IconButton onClick={togglePlay} aria-label="play/pause">
-          <PlayCircleFilledWhiteOutlinedIcon className={classes.playIcon} />
+          <PlayCircleFilledWhiteOutlinedIcon />
         </IconButton>
         <IconButton onClick={nextAudio} aria-label="next">
           <SkipNextIcon />
