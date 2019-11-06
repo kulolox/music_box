@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayCircleFilledWhiteOutlinedIcon from '@material-ui/icons/PlayCircleFilledWhiteOutlined';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
+import { inject, observer } from 'mobx-react';
 
 const useStyles = makeStyles(theme => ({
   controls: {
@@ -16,20 +17,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Controller() {
-  const classes = useStyles();
+const Controller = inject('playerModel')(
+  observer(({ playerModel }) => {
+    const classes = useStyles();
+    const togglePlay = () => {
+      playerModel.togglePlay();
+    };
 
-  return (
-    <div className={classes.controls}>
-      <IconButton aria-label="previous">
-        <SkipPreviousIcon />
-      </IconButton>
-      <IconButton aria-label="play/pause">
-        <PlayCircleFilledWhiteOutlinedIcon className={classes.playIcon} />
-      </IconButton>
-      <IconButton aria-label="next">
-        <SkipNextIcon />
-      </IconButton>
-    </div>
-  );
-}
+    const prevAudio = () => {
+      playerModel.prevAudio();
+    };
+
+    const nextAudio = () => {
+      playerModel.nextAudio();
+    };
+    return (
+      <div className={classes.controls}>
+        <IconButton onClick={prevAudio} aria-label="previous">
+          <SkipPreviousIcon />
+        </IconButton>
+        <IconButton onClick={togglePlay} aria-label="play/pause">
+          <PlayCircleFilledWhiteOutlinedIcon className={classes.playIcon} />
+        </IconButton>
+        <IconButton onClick={nextAudio} aria-label="next">
+          <SkipNextIcon />
+        </IconButton>
+      </div>
+    );
+  })
+);
+export default Controller;

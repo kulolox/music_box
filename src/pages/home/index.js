@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Home() {
   const classes = useStyles();
-
+  return null;
   return (
     <div className={classes.home}>
       <Banner />
