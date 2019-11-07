@@ -1,31 +1,54 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import LoopIcon from '@material-ui/icons/Loop';
 import RepeatOneIcon from '@material-ui/icons/RepeatOne';
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
-import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import Grid from '@material-ui/core/Grid';
+import { inject, observer } from 'mobx-react';
+
+import Volume from '@components/Player/Volume';
+import AudioList from '@components/Player/AudioList';
 
 const useStyles = makeStyles(theme => ({
-  menu: {}
+  menu: {
+    '& svg': {
+      color: theme.palette.common.white
+    }
+  }
 }));
 
-export default function Menu() {
-  const classes = useStyles();
-  const loop = false;
-  const volume = 0.6;
-  return (
-    <div className={classes.menu}>
-      <IconButton aria-label="previous">
-        {volume !== 0 ? <VolumeUpIcon /> : <VolumeOffIcon />}
-      </IconButton>
-      <IconButton aria-label="previous">
-        {loop ? <LoopIcon /> : <RepeatOneIcon />}
-      </IconButton>
-      <IconButton aria-label="previous">
-        <PlaylistPlayIcon />
-      </IconButton>
-    </div>
-  );
-}
+const Menu = inject('playerModel')(
+  observer(({ playerModel }) => {
+    const classes = useStyles();
+    const {
+      status: { loop, volume }
+    } = playerModel;
+
+    const toggleLoop = () => {
+      playerModel.toggleLoop();
+    };
+    const setVolume = e => {
+      playerModel.setStatus({
+        volume: parseFloat(e.target.value)
+      });
+    };
+
+    return (
+      <Grid container className={classes.menu}>
+        <Grid item>
+          <Volume value={volume} onChange={setVolume} />
+        </Grid>
+        <Grid item>
+          <IconButton onClick={toggleLoop} aria-label="previous">
+            {loop ? <LoopIcon /> : <RepeatOneIcon />}
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <AudioList />
+        </Grid>
+      </Grid>
+    );
+  })
+);
+
+export default Menu;

@@ -1,0 +1,32 @@
+.volume {
+  position: relative;
+  &:hover {
+    color: orange;
+  }
+  .volumeRange {
+    position: absolute;
+    left: -16px;
+    bottom: 73px;
+    z-index: 1;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+    width: 80px;
+    height: 30px;
+    transform: rotate(-90deg);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+  }
+  .volumeProgress {
+    flex: 1;
+    height: 2px;
+    position: relative;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.1)
+    );
+    input {
+      left: 0;
+    }
+  }
+}

@@ -1,16 +1,16 @@
 import React, { useRef } from 'react';
 import ReactPlayer from 'react-player';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid';
 import { inject, observer } from 'mobx-react';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 import AudioInfo from './AudioInfo';
 import Menu from './Menu';
 import Controller from './Controller';
 
 const useStyles = makeStyles(theme => ({
-  card: {
+  player: {
     position: 'fixed',
     bottom: 0,
     left: 0,
@@ -18,14 +18,6 @@ const useStyles = makeStyles(theme => ({
     zIndex: 999,
     background: 'linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.6))',
     borderRadius: 0
-  },
-  realPlayer: {
-    display: 'none'
-  },
-  content: {
-    // height: 47,
-    width: 980,
-    margin: '0 auto'
   }
 }));
 
@@ -49,36 +41,34 @@ const Player = inject('playerModel')(
       playerModel.onEnded();
     };
     return (
-      <Card className={classes.card}>
-        <ReactPlayer
-          className={classes.realPlayer}
-          ref={playerRef}
-          url={url}
-          playing={playing}
-          playbackRate={playbackRate}
-          volume={volume}
-          onProgress={onProgress}
-          onDuration={onDuration}
-          onSeek={e => console.log('onSeek', e)}
-          onEnded={onEnded}
-        />
-        <div className={classes.content}>
-          <Grid container spacing={1}>
+      <Box className={classes.player}>
+        <Box display="none">
+          <ReactPlayer
+            ref={playerRef}
+            url={url}
+            playing={playing}
+            playbackRate={playbackRate}
+            volume={volume}
+            onProgress={onProgress}
+            onDuration={onDuration}
+            onSeek={e => console.log('onSeek', e)}
+            onEnded={onEnded}
+          />
+        </Box>
+        <Box width={980} mx="auto">
+          <Grid container alignItems="center" spacing={1}>
             <Grid item xs={2}>
-              {/* 播放功能区 */}
               <Controller />
             </Grid>
             <Grid item xs={8}>
-              {/* 歌曲与进度 */}
               <AudioInfo />
             </Grid>
             <Grid item xs={2}>
-              {/* 功能按钮区 */}
               <Menu />
             </Grid>
           </Grid>
-        </div>
-      </Card>
+        </Box>
+      </Box>
     );
   })
 );

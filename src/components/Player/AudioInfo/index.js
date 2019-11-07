@@ -4,47 +4,12 @@ import { observer, inject } from 'mobx-react';
 
 import InputRange from '@components/Player/InputRange';
 import Duration from './Duration';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
-  audioInfo: {
-    display: 'flex',
-    padding: '6px 0'
-  },
-  logo: {
-    width: 34,
-    height: 34,
-    background: '#ccc',
-    borderRadius: 4,
-    marginRight: 16
-  },
   main: {
-    width: '100%'
-  },
-  name: {
-    fontSize: 12,
-    color: '#fff',
-    marginBottom: 2
-  },
-  progressBox: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  progress: {
-    flex: 1,
-    height: 2,
-    background: '#000',
-    position: 'relative'
-  },
-  loadProgress: {
-    background: '#ccc',
-    height: '100%'
-  },
-  timer: {
-    color: '#fff',
-    fontSize: 12,
-    marginLeft: 16,
-    textAlign: 'center'
+    width: 'calc(100% - 40px)'
   },
   allTime: {
     color: '#dcdcdc',
@@ -76,12 +41,16 @@ const AudioInfo = inject('playerModel')(
       playerModel.player.seekTo(parseFloat(e.target.value));
     };
     return (
-      <div className={classes.audioInfo}>
-        <div className={classes.logo} />
-        <div className={classes.main}>
-          <div className={classes.name}>{name}</div>
-          <div className={classes.progressBox}>
-            <div className={classes.progress}>
+      <Grid container justify="space-between">
+        <Grid item>
+          <Box width={34} height={34} bgcolor="#ccc" borderRadius={4} />
+        </Grid>
+        <Grid className={classes.main}>
+          <Box fontSize="12" mb="2" color="#fff">
+            {name}
+          </Box>
+          <Box display="flex" alignItems="center">
+            <Box height={2} flex="1" bgcolor="#000" position="relative">
               {/* 播放进度条 */}
               <InputRange
                 min={0}
@@ -92,18 +61,16 @@ const AudioInfo = inject('playerModel')(
                 onMouseUp={onSeekMouseUp}
               />
               {/* 加载进度条 */}
-              <div
-                className={classes.loadProgress}
-                style={{ width: `${loaded * 100}%` }}
-              />
-            </div>
-            <div className={classes.timer}>
+              <Box width={`${loaded * 100}%`} height="100%" bgcolor="#ccc" />
+            </Box>
+            {/* 时间显示器 */}
+            <Box fontSize={12} color="#fff" ml={2} textAlign="center">
               <Duration seconds={duration * played} />
               <Duration className={classes.allTime} seconds={duration} />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
     );
   })
 );
