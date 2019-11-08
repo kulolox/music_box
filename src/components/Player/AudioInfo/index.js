@@ -2,12 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { observer, inject } from 'mobx-react';
 
-import InputRange from '@components/Player/InputRange';
+import InputRange from '@components/InputRange';
 import Duration from './Duration';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   main: {
     width: 'calc(100% - 40px)'
   },

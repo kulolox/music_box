@@ -4,17 +4,14 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import IconButton from '@material-ui/core/IconButton';
 import Fade from '@material-ui/core/Fade';
+
 import cssStyles from './index.module.scss';
-import InputRange from '@components/Player/InputRange';
+import InputRange from '@components/InputRange';
 
 class Volume extends Component {
   static propTypes = {
     value: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    title: ''
   };
 
   state = {

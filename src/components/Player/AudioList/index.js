@@ -6,17 +6,31 @@ import IconButton from '@material-ui/core/IconButton';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import Box from '@material-ui/core/Box';
 import Fade from '@material-ui/core/Fade';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
+
+import ScrollBarContainer from '@components/ScrollBarContainer';
 
 const useStyles = makeStyles(theme => ({
-  list: {
+  listContainer: {
     position: 'absolute',
     left: '50%',
     transform: 'translateX(-50%)',
     bottom: 48,
     height: 400,
-    background: 'rgba(0,0,0,.75)',
     borderRadius: '4px 4px 0 0',
-    boxShadow: '0 -2px 4px 0 rgba(0,0,0,.2)'
+    boxShadow: '0 -2px 4px 0 rgba(0,0,0,.2)',
+    overflow: 'hidden',
+    display: 'flex',
+    background: 'rgba(0,0,0,0.75)'
+  },
+  head: {
+    background: 'rgba(0,0,0,0.8)',
+    padding: '8px 16px',
+    textAlign: 'center'
   }
 }));
 
@@ -25,14 +39,43 @@ const AudioList = inject('playerModel')(
     const classes = useStyles();
     const [showList, toggleList] = useState(false);
     const {
-      status: { loop, volume }
+      audioData,
+      status: { index }
     } = playerModel;
 
     return (
       <React.Fragment>
         <Fade in={showList}>
-          <Box width={980} className={classes.list}>
-            123
+          <Box width={980} className={classes.listContainer}>
+            <Box width="50%" height="100%" color="#fff">
+              <Box className={classes.head}>歌曲列表</Box>
+              <Box height="100%" position="relative">
+                <ScrollBarContainer>
+                  <List component="nav" aria-label="secondary mailbox folders">
+                    {audioData.map((data, i) => (
+                      <ListItem
+                        key={data.url}
+                        onClick={() => playerModel.playByIndex(i)}
+                        button
+                      >
+                        <ListItemIcon>
+                          {index === i && (
+                            <ArrowRightRoundedIcon style={{ color: 'red' }} />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText fontSize="14px" primary={data.name} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </ScrollBarContainer>
+              </Box>
+            </Box>
+            <Box width="50%" height="100%" color="#fff">
+              <Box className={classes.head}>歌词</Box>
+              <Box height="100%" position="relative">
+                <ScrollBarContainer></ScrollBarContainer>
+              </Box>
+            </Box>
           </Box>
         </Fade>
 

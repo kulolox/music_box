@@ -1,0 +1,53 @@
+.inputRanger {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border-radius: 10px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* 公用滑条样式 */
+  @mixin track-style {
+    -webkit-appearance: none; //去除自带的滑条样式
+    -moz-appearance: none;
+  }
+  /* 公用滑块样式 */
+  @mixin thumb-style {
+    -webkit-appearance: none; //去除自带的滑块样式
+    -moz-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: orange;
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: none;
+  }
+  &::-webkit-slider-runnable-track {
+    //chrome滑条
+    @include track-style;
+  }
+  &::-moz-range-track {
+    //firefox滑条
+    @include track-style;
+    outline: none;
+  }
+  &::-moz-range-thumb {
+    //firefox滑块
+    @include thumb-style;
+  }
+  &::-webkit-slider-thumb {
+    //chrome滑块
+    @include thumb-style;
+  }
+  &::-moz-focus-outer {
+    //firefox去input range 的outline
+    border: 0;
+  }
+}

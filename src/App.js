@@ -23,7 +23,7 @@ const sources = [
   }
 ];
 
-playerModel.applyData(sources);
+// playerModel.applyData(sources);
 
 function App() {
   return (
