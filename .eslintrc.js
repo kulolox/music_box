@@ -77,6 +77,7 @@ module.exports = {
     'no-throw-literal': 0,
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     'no-restricted-syntax': 0,
-    'jsx-a11y/no-static-element-interactions': 0
+    'jsx-a11y/no-static-element-interactions': 0,
+    'react/no-array-index-key': 0
   }
 };

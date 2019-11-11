@@ -72,7 +72,6 @@ export default function Album() {
         order: 'hot'
       };
       const result = await getAlbum(query);
-      console.log('album:', result.data.playlists);
       setData(result.data.playlists);
     };
     fetchAlbum();
@@ -86,7 +85,7 @@ export default function Album() {
       <div className={classes.list}>
         {data.map(item => (
           <div className={classes.item} key={item.id}>
-            <Link className={classes.content} to={`/details/${item.id}`}>
+            <Link className={classes.content} to={`/playlist/${item.id}`}>
               <div className={classes.cover}>
                 <img src={item.coverImgUrl} alt="" />
                 <div className={classes.playCount}>

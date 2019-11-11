@@ -8,3 +8,7 @@ export const getBanner = type => {
 export const getAlbum = ({ limit, order }) => {
   return axios.get(`${basicUrl}/top/playlist?limit=${limit}&order=${order}`);
 };
+
+export const getPlaylist = id => {
+  return axios.get(`${basicUrl}/playlist/detail?id=${id}`);
+};
