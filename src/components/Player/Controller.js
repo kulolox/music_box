@@ -12,7 +12,7 @@ import { grey } from '@material-ui/core/colors';
 const useStyles = makeStyles(theme => ({
   controls: {
     '& svg': {
-      color: theme.palette.common.white
+      color: '#fff'
     }
   },
   disabled: {
@@ -45,12 +45,12 @@ const Controller = inject('playerModel')(
       <Grid container className={classes.controls}>
         <Grid item>
           <IconButton
-            className={{ [classes.disabled]: !hasPrevAudio }}
+            className={!hasPrevAudio && classes.disabled}
             onClick={prevAudio}
             disabled={!hasPrevAudio}
             aria-label="previous"
           >
-            <SkipPreviousIcon />
+            <SkipPreviousIcon color="disabled" />
           </IconButton>
         </Grid>
         <Grid item>
@@ -64,7 +64,7 @@ const Controller = inject('playerModel')(
         </Grid>
         <Grid item>
           <IconButton
-            className={{ [classes.disabled]: !hasNextAudio }}
+            className={!hasNextAudio && classes.disabled}
             onClick={nextAudio}
             disabled={!hasNextAudio}
             aria-label="next"

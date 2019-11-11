@@ -12,3 +12,7 @@ export const getAlbum = ({ limit, order }) => {
 export const getPlaylist = id => {
   return axios.get(`${basicUrl}/playlist/detail?id=${id}`);
 };
+
+export const getSongs = ids => {
+  return axios.get(`${basicUrl}/song/url?id=${ids}`);
+};

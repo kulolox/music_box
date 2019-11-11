@@ -34,7 +34,7 @@ export default function Banner() {
   return (
     <Swiper speed={3000} navigation>
       {data.map(item => (
-        <div key={item.encodeId} className={classes.item}>
+        <div key={item.scm} className={classes.item}>
           <img src={item.imageUrl} alt="" />
         </div>
       ))}

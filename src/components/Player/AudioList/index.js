@@ -8,9 +8,9 @@ import Box from '@material-ui/core/Box';
 import Fade from '@material-ui/core/Fade';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
+import Badge from '@material-ui/core/Badge';
 
 import ScrollBarContainer from '@components/ScrollBarContainer';
 
@@ -51,18 +51,18 @@ const AudioList = inject('playerModel')(
               <Box className={classes.head}>歌曲列表</Box>
               <Box height="100%" position="relative">
                 <ScrollBarContainer>
-                  <List component="nav" aria-label="secondary mailbox folders">
+                  <List component="nav">
                     {audioData.map((data, i) => (
                       <ListItem
                         key={data.url}
                         onClick={() => playerModel.playByIndex(i)}
                         button
                       >
-                        <ListItemIcon>
+                        <Box display="flex" width={30}>
                           {index === i && (
                             <ArrowRightRoundedIcon style={{ color: 'red' }} />
                           )}
-                        </ListItemIcon>
+                        </Box>
                         <ListItemText fontSize="14px" primary={data.name} />
                       </ListItem>
                     ))}
@@ -83,7 +83,9 @@ const AudioList = inject('playerModel')(
           onClick={() => toggleList(prevState => !prevState)}
           aria-label="list"
         >
-          <PlaylistPlayIcon />
+          <Badge badgeContent={audioData.length} color="secondary">
+            <PlaylistPlayIcon />
+          </Badge>
         </IconButton>
       </React.Fragment>
     );

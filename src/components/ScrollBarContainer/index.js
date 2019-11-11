@@ -9,11 +9,11 @@ class ScrollBarContainer extends Component {
   }
 
   state = {
-    showList: false
+    showList: false,
+    top: 0
   };
 
   componentDidMount() {
-    this.parseDom(this.listContainer.current);
     this.listContainer.current.addEventListener('scroll', this.handelScroll);
   }
 
@@ -36,6 +36,7 @@ class ScrollBarContainer extends Component {
     const slideBlockTop =
       (scrollTop * (clientHeight - slideBlockHeight)) /
       (scrollHeight - clientHeight);
+    if (isNaN(slideBlockTop)) return;
     this.setState({
       slideBlockStyle: {
         height: slideBlockHeight,
