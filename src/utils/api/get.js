@@ -16,3 +16,7 @@ export const getPlaylist = id => {
 export const getSongs = ids => {
   return axios.get(`${basicUrl}/song/url?id=${ids}`);
 };
+
+export const getLyric = id => {
+  return axios.get(`${basicUrl}/lyric?id=${id}`);
+};

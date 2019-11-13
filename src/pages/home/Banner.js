@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Swiper from '@src/components/Swiper';
 import { getBanner } from '@src/utils/api/get';
+import useGetData from '@src/hooks/useGetData';
 
 const useStyles = makeStyles(theme => ({
   item: {
@@ -20,20 +21,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Banner() {
   const classes = useStyles();
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const type = 0;
-      const result = await getBanner(type);
-      console.log('result:', result.data.banners);
-      setData(result.data.banners);
-    };
-    fetchData();
-  }, []);
-  if (data.length === 0) return null;
+  const data = useGetData(getBanner, 0);
+  if (!data) return null;
+  const { banners } = data;
   return (
     <Swiper speed={3000} navigation>
-      {data.map(item => (
+      {banners.map(item => (
         <div key={item.scm} className={classes.item}>
           <img src={item.imageUrl} alt="" />
         </div>

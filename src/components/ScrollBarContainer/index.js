@@ -14,6 +14,9 @@ class ScrollBarContainer extends Component {
   };
 
   componentDidMount() {
+    if (this.props.getRef) {
+      this.props.getRef(this.listContainer.current);
+    }
     this.listContainer.current.addEventListener('scroll', this.handelScroll);
   }
 

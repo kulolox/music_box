@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import HeadsetIcon from '@material-ui/icons/Headset';
 
 import { getAlbum } from '@src/utils/api/get';
+import useGetData from '@src/hooks/useGetData';
 
 const useStyles = makeStyles(theme => ({
   label: {
@@ -64,26 +65,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Album() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchAlbum = async () => {
-      const query = {
-        limit: 12,
-        order: 'hot'
-      };
-      const result = await getAlbum(query);
-      setData(result.data.playlists);
-    };
-    fetchAlbum();
-  }, []);
-
   const classes = useStyles();
 
+  const query = { limit: 12, order: 'hot' };
+  const data = useGetData(getAlbum, query);
+
+  if (!data) return null;
+  const { playlists } = data;
   return (
     <React.Fragment>
       <div className={classes.label}>热门歌单</div>
       <div className={classes.list}>
-        {data.map(item => (
+        {playlists.map(item => (
           <div className={classes.item} key={item.id}>
             <Link className={classes.content} to={`/playlist/${item.id}`}>
               <div className={classes.cover}>

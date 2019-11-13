@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 
 import { getPlaylist } from '@utils/api/get';
+import useGetData from '@src/hooks/useGetData';
 
 import Header from './Header';
 import SongList from './SongList';
@@ -17,16 +18,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function Playlist(props) {
   const classes = useStyles();
-  const [data, setData] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      const { id } = props.match.params;
-      const result = await getPlaylist(id);
-      setData(result.data);
-    };
-    fetchData();
-  }, []);
+  const { id } = props.match.params;
+  const data = useGetData(getPlaylist, id);
   if (!data) return null;
+  console.log('Playlist Data:', data);
   const { playlist } = data;
   return (
     <Card className={classes.details}>

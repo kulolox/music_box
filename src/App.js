@@ -1,34 +1,19 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Provider } from 'mobx-react';
 
 import Home from '@pages/home';
 import Playlist from '@src/pages/playlist';
-import Song from '@src/pages/song';
+// import Song from '@src/pages/song';
 import Player from '@components/Player';
 import PlayerModel from '@stores/player';
+import PlayerContext from '@src/context/PlayerContext';
 
 const playerModel = new PlayerModel();
 
-// const sources = [
-//   {
-//     name: '放不过自己',
-//     url:
-//       'https://fdfs.xmcdn.com/group69/M08/89/77/wKgMb12_xyuwdp3UACODUONoTAk746.m4a'
-//   },
-//   {
-//     name: '差一点',
-//     url:
-//       'https://fdfs.xmcdn.com/group69/M08/89/79/wKgMb12_xzbTblvNAB83dFR6BBM461.m4a'
-//   }
-// ];
-
-// playerModel.applyData(sources);
-
 function App() {
   return (
-    <Provider playerModel={playerModel}>
+    <PlayerContext.Provider value={playerModel}>
       <React.Fragment>
         <CssBaseline />
         <Router>
@@ -36,13 +21,12 @@ function App() {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/playlist/:id?" exact component={Playlist} />
-              <Route path="/song/:id?" exact component={Song} />
             </Switch>
           </React.Suspense>
         </Router>
         <Player />
       </React.Fragment>
-    </Provider>
+    </PlayerContext.Provider>
   );
 }
 
