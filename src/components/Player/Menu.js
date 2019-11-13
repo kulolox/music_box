@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 
 import Volume from '@components/Player/Volume';
 import AudioList from '@components/Player/AudioList';
-import PlayerContext from '@src/context/PlayerContext';
+import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(theme => ({
   menu: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Menu = observer(() => {
-  const playerModel = React.useContext(PlayerContext);
+  const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const {
     status: { loop, volume }

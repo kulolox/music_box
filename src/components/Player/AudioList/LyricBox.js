@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 import Lyric from '@components/Player/Lyric';
 import { getLyric } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
-import PlayerContext from '@src/context/PlayerContext';
+import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(theme => ({
   head: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LyricBox = observer(() => {
-  const playerModel = React.useContext(PlayerContext);
+  const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const {
     audioData,

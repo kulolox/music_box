@@ -12,7 +12,7 @@ import { observer } from 'mobx-react';
 import { strToHtml } from '@utils/tools';
 import { getSongs } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
-import PlayerContext from '@src/context/PlayerContext';
+import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = observer(({ data }) => {
-  const playerModel = React.useContext(PlayerContext);
+  const { playerModel } = React.useContext(GlobalContext);
   console.log('playerModel:', playerModel);
   const classes = useStyles();
   const ids = data.trackIds.map(t => t.id).join(',');

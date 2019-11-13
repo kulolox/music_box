@@ -8,7 +8,7 @@ import PauseCircleOutlineOutlinedIcon from '@material-ui/icons/PauseCircleOutlin
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import Grid from '@material-ui/core/Grid';
 import { grey } from '@material-ui/core/colors';
-import PlayerContext from '@src/context/PlayerContext';
+import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(theme => ({
   controls: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Controller = observer(() => {
-  const playerModel = React.useContext(PlayerContext);
+  const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const {
     status: { playing },

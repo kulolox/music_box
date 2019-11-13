@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import AudioInfo from './AudioInfo';
 import Menu from './Menu';
 import Controller from './Controller';
-import PlayerContext from '@src/context/PlayerContext';
+import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(theme => ({
   player: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Player = observer(() => {
-  const playerModel = React.useContext(PlayerContext);
+  const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const {
     status: { url, playing, playbackRate, volume }

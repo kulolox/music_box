@@ -4,16 +4,16 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from '@pages/home';
 import Playlist from '@src/pages/playlist';
-// import Song from '@src/pages/song';
 import Player from '@components/Player';
 import PlayerModel from '@stores/player';
-import PlayerContext from '@src/context/PlayerContext';
 
 const playerModel = new PlayerModel();
 
+export const GlobalContext = React.createContext();
+
 function App() {
   return (
-    <PlayerContext.Provider value={playerModel}>
+    <GlobalContext.Provider value={{ playerModel }}>
       <React.Fragment>
         <CssBaseline />
         <Router>
@@ -26,7 +26,7 @@ function App() {
         </Router>
         <Player />
       </React.Fragment>
-    </PlayerContext.Provider>
+    </GlobalContext.Provider>
   );
 }
 

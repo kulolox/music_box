@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
 
 import ScrollBarContainer from '@components/ScrollBarContainer';
-import PlayerContext from '@src/context/PlayerContext';
+import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(theme => ({
   head: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Mlist = observer(() => {
-  const playerModel = React.useContext(PlayerContext);
+  const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const {
     audioData,

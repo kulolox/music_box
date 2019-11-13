@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import cssStyles from './Lyric.module.scss';
 import ScrollBarContainer from '@src/components/ScrollBarContainer';
-import PlayerContext from '@src/context/PlayerContext';
+import { GlobalContext } from '@src/App';
 
 const d3 = require('d3-ease');
 
@@ -69,7 +69,7 @@ const scroll = (dom, distance) => {
 };
 
 const Lyric = observer(({ lyric }) => {
-  const playerModel = React.useContext(PlayerContext);
+  const { playerModel } = React.useContext(GlobalContext);
   const [formatLyrics, setFormatLyrics] = useState(parseLyric(lyric));
   const [activeIndex, setActiveIndex] = useState(0);
   const baseLine = 200;

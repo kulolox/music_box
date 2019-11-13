@@ -10,7 +10,7 @@ import Fade from '@material-ui/core/Fade';
 
 import Mlist from './List';
 import LyricBox from './LyricBox';
-import PlayerContext from '@src/context/PlayerContext';
+import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(theme => ({
   listContainer: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AudioList = observer(() => {
-  const playerModel = React.useContext(PlayerContext);
+  const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const [showList, toggleList] = useState(false);
   const { audioData } = playerModel;
