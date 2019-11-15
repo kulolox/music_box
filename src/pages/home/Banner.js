@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Banner() {
   const classes = useStyles();
-  const data = useGetData(getBanner, 0);
+  const data = useGetData(getBanner, 0, 'banner', 60);
   if (!data) return null;
   const { banners } = data;
   return (

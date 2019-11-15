@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 /**
  * get请求公共hook
  * @param {Function} fn api接口
@@ -13,6 +14,6 @@ export default function useGetData(fn, query) {
       setData(result.data);
     };
     fetchData();
-  }, [query]);
+  }, [fn, query]);
   return data;
 }

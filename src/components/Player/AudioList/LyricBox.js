@@ -26,6 +26,7 @@ const LyricBox = observer(() => {
   } = playerModel;
   // if (audioData.length === 0) return;
   const id = audioData[index] ? audioData[index].id : null;
+  if (!id) return null;
   const data = useGetData(getLyric, id);
   if (!data) return null;
   const { lyric } = data.lrc;

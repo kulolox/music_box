@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import HeadsetIcon from '@material-ui/icons/Headset';
@@ -66,11 +66,17 @@ const useStyles = makeStyles(theme => ({
 
 export default function Album() {
   const classes = useStyles();
-
-  const query = { limit: 12, order: 'hot' };
+  const limit = 12;
+  const order = 'hot';
+  const query = useMemo(() => {
+    return {
+      limit,
+      order
+    };
+  }, [limit, order]);
   const data = useGetData(getAlbum, query);
-
   if (!data) return null;
+  console.log('data:', data);
   const { playlists } = data;
   return (
     <React.Fragment>
