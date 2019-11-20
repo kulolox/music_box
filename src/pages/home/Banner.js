@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Swiper from '@src/components/Swiper';
 import { getBanner } from '@src/utils/api/get';
-import useGetData from '@src/hooks/useGetData';
+import useGetDataByAsyncCached from '@src/hooks/useGetDataByAsyncCached';
 
 const useStyles = makeStyles(theme => ({
   item: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Banner() {
   const classes = useStyles();
-  const data = useGetData(getBanner, 0, 'banner', 60);
+  const data = useGetDataByAsyncCached(getBanner, 0, 'banner', 60);
   if (!data) return null;
   const { banners } = data;
   return (

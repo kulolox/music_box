@@ -8,7 +8,7 @@ import asyncCached from '@src/utils/asyncCache';
  * @param {Number} cache 缓存过期时间
  * @returns {*} 数据
  */
-export default function useGetData(fn, query, cacheKey, cache = 0) {
+export default function useGetDataByAsyncCached(fn, query, cacheKey, cache = 0) {
   const [data, setData] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
