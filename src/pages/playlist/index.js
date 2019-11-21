@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 
@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
 export default function Playlist(props) {
   const classes = useStyles();
   const { id } = props.match.params;
-  const data = useGetData(getPlaylist, id);
+  const request = useCallback(() => getPlaylist(id), [id]);
+  const data = useGetData(request);
   if (!data) return null;
   console.log('Playlist Data:', data);
   const { playlist } = data;

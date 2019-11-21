@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,7 @@ import Lyric from '@components/Player/Lyric';
 import { getLyric } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 import { GlobalContext } from '@src/App';
+import useGetDataByAsyncCached from '@src/hooks/useGetDataByAsyncCached';
 
 const useStyles = makeStyles(theme => ({
   head: {
@@ -24,13 +25,16 @@ const LyricBox = observer(() => {
     audioData,
     status: { index }
   } = playerModel;
-  // if (audioData.length === 0) return;
-  const id = audioData[index] ? audioData[index].id : null;
-  if (!id) return null;
-  const data = useGetData(getLyric, id);
+  const id = audioData.length > 0 ? audioData[index].id : null;
+  console.log('index:', index);
+  console.log('id:', id);
+  const request = useCallback(() => {
+    return getLyric(id);
+  }, [id]);
+  // 歌词变动可能性不大，使用缓存
+  const data = useGetDataByAsyncCached(request, `lyric${id}`, 1000000);
   if (!data) return null;
   const { lyric } = data.lrc;
-  console.log('lyric:', lyric);
   return (
     <Box width="50%" height="100%" color="#fff">
       <Box className={classes.head}>歌词</Box>

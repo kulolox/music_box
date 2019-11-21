@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Swiper from '@src/components/Swiper';
@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function Banner() {
   const classes = useStyles();
-  const data = useGetDataByAsyncCached(getBanner, 0, 'banner', 60);
+  const request = useCallback(() => getBanner(0), []);
+  const data = useGetDataByAsyncCached(request, 'banner', 60);
   if (!data) return null;
   const { banners } = data;
   return (

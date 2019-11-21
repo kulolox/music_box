@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -48,10 +48,10 @@ const useStyles = makeStyles(theme => ({
 
 const Header = observer(({ data }) => {
   const { playerModel } = React.useContext(GlobalContext);
-  console.log('playerModel:', playerModel);
   const classes = useStyles();
   const ids = data.trackIds.map(t => t.id).join(',');
-  const source = useGetData(getSongs, ids);
+  const request = useCallback(() => getSongs(ids), [ids]);
+  const source = useGetData(request);
   if (!source) return null;
   const songs = data.tracks.map(t => {
     return {

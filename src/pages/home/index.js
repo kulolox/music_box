@@ -5,7 +5,6 @@ import Album from './Album';
 import Banner from './Banner';
 
 export default function Home() {
-  // return false;
   return (
     <Box width={980} mx="auto">
       <Banner />

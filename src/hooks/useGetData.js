@@ -2,18 +2,17 @@ import { useState, useEffect } from 'react';
 
 /**
  * get请求公共hook
- * @param {Function} fn api接口
- * @param {Object|String|Number} query 参数
+ * @param {Function} fn 请求函数
  * @returns {*} 数据
  */
-export default function useGetData(fn, query) {
+export default function useGetData(fn) {
   const [data, setData] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fn(query);
+      const result = await fn();
       setData(result.data);
     };
     fetchData();
-  }, [fn, query]);
+  }, [fn]);
   return data;
 }

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import HeadsetIcon from '@material-ui/icons/Headset';
@@ -68,13 +68,13 @@ export default function Album() {
   const classes = useStyles();
   const limit = 12;
   const order = 'hot';
-  const query = useMemo(() => {
-    return {
+  const request = useCallback(() => {
+    return getAlbum({
       limit,
       order
-    };
+    });
   }, [limit, order]);
-  const data = useGetData(getAlbum, query);
+  const data = useGetData(request);
   if (!data) return null;
   console.log('data:', data);
   const { playlists } = data;

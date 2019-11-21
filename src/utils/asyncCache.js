@@ -44,7 +44,6 @@ async function getCache(key) {
 
 // 设置缓存
 async function setCache(key, data, timestamp) {
-  console.log('setCache:', data);
   // worker加密,lowdb添加缓存
   const encrypt = await promiseWorker.postMessage({
     data: JSON.stringify({ data }),
