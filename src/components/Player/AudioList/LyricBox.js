@@ -6,7 +6,6 @@ import Box from '@material-ui/core/Box';
 
 import Lyric from '@components/Player/Lyric';
 import { getLyric } from '@src/utils/api/get';
-import useGetData from '@src/hooks/useGetData';
 import { GlobalContext } from '@src/App';
 import useGetDataByAsyncCached from '@src/hooks/useGetDataByAsyncCached';
 
@@ -26,8 +25,6 @@ const LyricBox = observer(() => {
     status: { index }
   } = playerModel;
   const id = audioData.length > 0 ? audioData[index].id : null;
-  console.log('index:', index);
-  console.log('id:', id);
   const request = useCallback(() => {
     return getLyric(id);
   }, [id]);
