@@ -1,5 +1,5 @@
 const axios = require('axios');
-const basicUrl = 'http://api.kulolox.cn:3000';
+const basicUrl = 'https://api.kulolox.cn:3000';
 
 export const getBanner = type => {
   return axios.get(`${basicUrl}/banner?type=${type}`);
