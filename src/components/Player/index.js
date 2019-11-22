@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 
 import AudioInfo from './AudioInfo';
 import Menu from './Menu';
@@ -56,19 +57,19 @@ const Player = observer(() => {
           onEnded={onEnded}
         />
       </Box>
-      <Box width={980} mx="auto">
-        <Grid container alignItems="center" spacing={1}>
-          <Grid item xs={2}>
+      <Container maxWidth="md">
+        <Box display="flex" alignItems="center">
+          <Box>
             <Controller />
-          </Grid>
-          <Grid item xs={8}>
+          </Box>
+          <Box flexGrow="1">
             <AudioInfo />
-          </Grid>
-          <Grid item xs={2}>
+          </Box>
+          <Box>
             <Menu />
-          </Grid>
-        </Grid>
-      </Box>
+          </Box>
+        </Box>
+      </Container>
     </Box>
   );
 });

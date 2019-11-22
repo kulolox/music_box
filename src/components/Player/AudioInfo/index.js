@@ -1,11 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 import InputRange from '@components/InputRange';
 import Duration from './Duration';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+
 import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(() => ({
@@ -42,11 +43,15 @@ const AudioInfo = observer(() => {
     playerModel.player.seekTo(parseFloat(e.target.value));
   };
   return (
-    <Grid container justify="space-between">
-      <Grid item>
-        <Box width={34} height={34} bgcolor="#ccc" borderRadius={4} />
-      </Grid>
-      <Grid className={classes.main}>
+    <Box display="flex" justify="space-between">
+      <Box
+        width={34}
+        height={34}
+        bgcolor="#ccc"
+        marginRight="8px"
+        borderRadius={4}
+      />
+      <Box className={classes.main}>
         <Box fontSize="12" mb="2" color="#fff">
           {name}
         </Box>
@@ -70,8 +75,8 @@ const AudioInfo = observer(() => {
             <Duration className={classes.allTime} seconds={duration} />
           </Box>
         </Box>
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 });
 
