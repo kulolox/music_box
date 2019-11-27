@@ -14,6 +14,7 @@ class PlayerModel {
     playing: false, // 播放状态
     url: '', // 当前播放url
     name: 'None', // 当前播放name
+    logo: '', // 当前音乐logo
     loop: false, // 是否循环
     playbackRate: 1, // 播放速率
     duration: 0, // 音频总时长
@@ -48,7 +49,8 @@ class PlayerModel {
   @action setAudioData() {
     this.setStatus({
       url: this.getCurrentData().url,
-      name: this.getCurrentData().name
+      name: this.getCurrentData().name,
+      logo: this.getCurrentData().logo
     });
   }
 
@@ -72,6 +74,7 @@ class PlayerModel {
   @action onEnded() {
     // 单曲循环
     if (this.status.loop) {
+      this.player.seekTo(0);
       this.play();
       return;
     }

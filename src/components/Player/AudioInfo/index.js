@@ -1,17 +1,24 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Avatar from '@material-ui/core/Avatar';
+import classNames from 'classnames';
 
 import InputRange from '@components/InputRange';
-import Duration from './Duration';
+import Duration from '@components/Duration';
+import desc_logo from '@src/assets/images/disc_logo.webp';
+import '@src/assets/css/animate.scss';
 
 import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(() => ({
   main: {
-    width: 'calc(100% - 40px)'
+    width: 'calc(100% - 40px)',
+    lineHeight: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   allTime: {
     color: '#dcdcdc',
@@ -19,6 +26,14 @@ const useStyles = makeStyles(() => ({
       content: '"/"',
       margin: '0 6px'
     }
+  },
+  logo: {
+    width: 34,
+    height: 34,
+    marginRight: 8
+  },
+  spin: {
+    animation: 'rotate 2s linear infinite'
   }
 }));
 
@@ -26,7 +41,7 @@ const AudioInfo = observer(() => {
   const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const {
-    status: { name, played, loaded, duration }
+    status: { name, logo, played, loaded, duration, playing }
   } = playerModel;
   const onSeekMouseDown = () => {
     playerModel.seeking(true);
@@ -44,12 +59,10 @@ const AudioInfo = observer(() => {
   };
   return (
     <Box display="flex" justify="space-between">
-      <Box
-        width={34}
-        height={34}
-        bgcolor="#ccc"
-        marginRight="8px"
-        borderRadius={4}
+      <Avatar
+        alt="desc logo"
+        src={logo ? logo : desc_logo}
+        className={classNames(classes.logo, { [classes.spin]: playing })}
       />
       <Box className={classes.main}>
         <Box fontSize="12" mb="2" color="#fff">

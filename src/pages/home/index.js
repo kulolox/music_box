@@ -1,12 +1,20 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
 
-import Album from './Album';
-import Banner from './Banner';
+import Album from '@pages/home/Album';
+import Banner from '@pages/home/Banner';
+
+const useStyles = makeStyles(() => ({
+  home: {
+    paddingBottom: 60
+  }
+}));
 
 export default function Home() {
+  const classes = useStyles();
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" className={classes.home}>
       <Banner />
       <Album />
     </Container>

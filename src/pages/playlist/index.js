@@ -1,17 +1,15 @@
 import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
+import Container from '@material-ui/core/Container';
 
 import { getPlaylist } from '@utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 
-import Header from './Header';
-import SongList from './SongList';
+import Header from '@pages/playlist/Header';
+import SongList from '@pages/playlist/SongList';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   details: {
-    width: 960,
-    margin: '0 auto',
     paddingBottom: 60
   }
 }));
@@ -25,9 +23,9 @@ export default function Playlist(props) {
   console.log('Playlist Data:', data);
   const { playlist } = data;
   return (
-    <Card className={classes.details}>
+    <Container maxWidth="md" className={classes.details}>
       <Header data={playlist} />
       <SongList data={playlist} />
-    </Card>
+    </Container>
   );
 }

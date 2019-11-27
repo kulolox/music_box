@@ -2,35 +2,24 @@ import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import HeadsetIcon from '@material-ui/icons/Headset';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 import { getAlbum } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
+import LineEllipsis from '@src/components/LineEllipsis';
 
 const useStyles = makeStyles(theme => ({
   label: {
     fontSize: 24,
     margin: '24px 0'
   },
-  list: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    margin: '0 -12px',
-    paddingBottom: 24
-  },
   item: {
-    boxSizing: 'border-box',
-    width: '25%',
-    padding: '0 12px',
-    marginBottom: 24,
     cursor: 'pointer',
     '& a': {
       color: '#333',
       textDecoration: 'none'
     }
-  },
-  name: {
-    fontSize: 16
   },
   cover: {
     position: 'relative',
@@ -66,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Album() {
   const classes = useStyles();
-  const limit = 12;
+  const limit = 24;
   const order = 'hot';
   const request = useCallback(() => {
     return getAlbum({
@@ -81,9 +70,16 @@ export default function Album() {
   return (
     <React.Fragment>
       <div className={classes.label}>热门歌单</div>
-      <div className={classes.list}>
+      <Grid container spacing="1">
         {playlists.map(item => (
-          <div className={classes.item} key={item.id}>
+          <Grid
+            item
+            xs={6}
+            sm={3}
+            md={2}
+            className={classes.item}
+            key={item.id}
+          >
             <Link className={classes.content} to={`/playlist/${item.id}`}>
               <div className={classes.cover}>
                 <img src={item.coverImgUrl} alt="" />
@@ -93,11 +89,13 @@ export default function Album() {
                 </div>
                 <div className={classes.auth}>{item.creator.nickname}</div>
               </div>
-              <div className={classes.name}>{item.name}</div>
+              <Box fontSize="13px" padding="8px 0">
+                <LineEllipsis text={item.name} />
+              </Box>
             </Link>
-          </div>
+          </Grid>
         ))}
-      </div>
+      </Grid>
     </React.Fragment>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { observer } from 'mobx-react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -6,10 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import Chip from '@material-ui/core/Chip';
+import Card from '@material-ui/core/Card';
 import PlayCircleFilledWhiteOutlinedIcon from '@material-ui/icons/PlayCircleFilledWhiteOutlined';
-import { observer } from 'mobx-react';
 
-import { strToHtml } from '@utils/tools';
 import { getSongs } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 import { GlobalContext } from '@src/App';
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
   desc: {
     fontSize: 14,
-    marginTop: 16
+    marginTop: 8
   }
 }));
 
@@ -57,6 +57,9 @@ const Header = observer(({ data }) => {
     return {
       id: t.id,
       name: t.name,
+      logo: t.al.picUrl,
+      time: t.dt,
+      singer: t.ar[0].name,
       url: source.data.find(o => o.id === t.id).url
     };
   });
@@ -69,11 +72,11 @@ const Header = observer(({ data }) => {
     playerModel.togglePlay();
   };
   return (
-    <div className={classes.header}>
+    <Card className={classes.header}>
       <div className={classes.logo}>
         <img src={data.coverImgUrl} alt="" />
       </div>
-      <div>
+      <Box flex="1">
         <Box mb={2} display="flex" alignItems="center">
           <Box mr={1}>
             <Chip
@@ -105,14 +108,9 @@ const Header = observer(({ data }) => {
             <Chip className={classes.tag} key={i} label={tag} size="small" />
           ))}
         </Box>
-        <Typography
-          className={classes.desc}
-          dangerouslySetInnerHTML={{
-            __html: strToHtml(data.description)
-          }}
-        />
-      </div>
-    </div>
+        <Typography className={classes.desc}>{data.description}</Typography>
+      </Box>
+    </Card>
   );
 });
 

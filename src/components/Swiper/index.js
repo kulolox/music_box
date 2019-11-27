@@ -47,8 +47,8 @@ const useStyles = makeStyles(theme => ({
     }
   },
   bulletActive: {
-    background: '#fff',
-    opacity: 0.8
+    background: '#fff !important',
+    opacity: '0.8 !important'
   },
   prev: { left: 10 },
   next: { right: 10 }

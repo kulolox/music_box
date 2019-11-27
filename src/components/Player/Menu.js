@@ -41,7 +41,7 @@ const Menu = observer(() => {
       </Grid>
       <Grid item>
         <IconButton onClick={toggleLoop} aria-label="previous">
-          {loop ? <LoopIcon /> : <RepeatOneIcon />}
+          {loop ? <RepeatOneIcon /> : <LoopIcon />}
         </IconButton>
       </Grid>
       <Grid item>

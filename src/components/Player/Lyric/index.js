@@ -94,33 +94,21 @@ const Lyric = observer(({ lyric }) => {
     setFormatLyrics(parseLyric(lyric));
     setActiveIndex(0);
   }, [lyric]);
-  useEffect(() => {
-    autorun(() => {
-      playerModel.status.playedSeconds;
-      setTimeout(() => {
-        setActiveLine(playerModel.status.playedSeconds);
-      }, 0);
-    });
-  }, []);
-
+  autorun(() => setActiveLine(playerModel.status.playedSeconds));
   return (
     <ScrollBarContainer getRef={getRef}>
-      {lyric ? (
-        <div className={cssStyles.lyrContainer}>
-          {formatLyrics.map((line, index) => (
-            <div
-              className={classNames(cssStyles.line, {
-                [cssStyles.active]: activeIndex === index
-              })}
-              key={line[0]}
-            >
-              {line[1]}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className={cssStyles.lyricInfo}>暂无文稿...</p>
-      )}
+      <div className={cssStyles.lyrContainer}>
+        {formatLyrics.map((line, index) => (
+          <div
+            className={classNames(cssStyles.line, {
+              [cssStyles.active]: activeIndex === index
+            })}
+            key={line[0]}
+          >
+            {line[1]}
+          </div>
+        ))}
+      </div>
     </ScrollBarContainer>
   );
 });

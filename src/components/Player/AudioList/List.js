@@ -10,6 +10,7 @@ import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
 
 import ScrollBarContainer from '@components/ScrollBarContainer';
 import { GlobalContext } from '@src/App';
+import Duration from '@components/Duration';
 
 const useStyles = makeStyles(theme => ({
   head: {
@@ -34,6 +35,7 @@ const Mlist = observer(() => {
           <List component="nav">
             {audioData.map((data, i) => (
               <ListItem
+                justifyContent="space-between"
                 key={data.id}
                 onClick={() => playerModel.playByIndex(i)}
                 button
@@ -43,7 +45,15 @@ const Mlist = observer(() => {
                     <ArrowRightRoundedIcon style={{ color: 'red' }} />
                   )}
                 </Box>
-                <ListItemText fontSize="14px" primary={data.name} />
+                <ListItemText
+                  primary={<Box fontSize="13px">{data.name}</Box>}
+                />
+                <Box fontSize="12px" padding="0 16px">
+                  <span>{data.singer}</span>
+                </Box>
+                <Box fontSize="12px" padding="0 8px">
+                  <Duration seconds={data.time / 1000} />
+                </Box>
               </ListItem>
             ))}
           </List>
