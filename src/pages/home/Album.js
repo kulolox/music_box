@@ -70,7 +70,7 @@ export default function Album() {
   return (
     <React.Fragment>
       <div className={classes.label}>热门歌单</div>
-      <Grid container spacing="1">
+      <Grid container spacing={1}>
         {playlists.map(item => (
           <Grid
             item

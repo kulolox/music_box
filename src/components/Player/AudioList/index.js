@@ -41,10 +41,7 @@ const AudioList = observer(() => {
         </Box>
       </Fade>
 
-      <IconButton
-        onClick={() => toggleList(prevState => !prevState)}
-        aria-label="list"
-      >
+      <IconButton onClick={() => toggleList(prevState => !prevState)}>
         <Badge badgeContent={audioData.length} color="secondary">
           <PlaylistPlayIcon />
         </Badge>
