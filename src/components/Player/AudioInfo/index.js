@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import classNames from 'classnames';
 
-import InputRange from '@components/InputRange';
+import InputRange from '@src/components/InputRange';
 import Duration from '@components/Duration';
 import desc_logo from '@src/assets/images/disc_logo.webp';
 import '@src/assets/css/animate.scss';
@@ -41,7 +41,8 @@ const AudioInfo = observer(() => {
   const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const {
-    status: { name, logo, played, loaded, duration, playing }
+    song,
+    status: { played, loaded, duration, playing, playedSeconds }
   } = playerModel;
   const onSeekMouseDown = () => {
     playerModel.seeking(true);
@@ -61,12 +62,12 @@ const AudioInfo = observer(() => {
     <Box display="flex" justify="space-between">
       <Avatar
         alt="desc logo"
-        src={logo ? logo : desc_logo}
+        src={song ? song.logo : desc_logo}
         className={classNames(classes.logo, { [classes.spin]: playing })}
       />
       <Box className={classes.main}>
         <Box fontSize="12" mb="2" color="#fff">
-          {name}
+          {song ? song.name : '暂无歌曲'}
         </Box>
         <Box display="flex" alignItems="center">
           <Box height={2} flex="1" bgcolor="#000" position="relative">
@@ -84,7 +85,7 @@ const AudioInfo = observer(() => {
           </Box>
           {/* 时间显示器 */}
           <Box fontSize={12} color="#fff" ml={2} textAlign="center">
-            <Duration seconds={duration * played} />
+            <Duration seconds={playedSeconds} />
             <Duration className={classes.allTime} seconds={duration} />
           </Box>
         </Box>

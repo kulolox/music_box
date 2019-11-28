@@ -1,42 +1,41 @@
 import { observable, action, computed } from 'mobx';
 
 class PlayerModel {
-  /**
-   * lists 数据列表
-   * [{
-   *    id, 歌曲id
-   *    name, 歌名
-   *    url, 歌曲链接
-   *    time, 歌曲总时长
-   *    logo, 歌曲logo
-   *    singer, 歌手
-   * }]
-   *  */
-  @observable lists = [];
+  @observable audioData = [];
 
-  // 播放器实例
   @observable player = null;
 
-  @observable index = 0;
-
   @observable status = {
+    index: 0, // 当前audio在data中的索引
     volume: 0.6, // 音量
     played: 0, // 播放进度
     loaded: 0, // 加载进度
     playedSeconds: 0, // 已播放秒数
     playing: false, // 播放状态
+    url: '', // 当前播放url
+    name: 'None', // 当前播放name
+    logo: '', // 当前音乐logo
     loop: false, // 是否循环
+    playbackRate: 1, // 播放速率
     duration: 0, // 音频总时长
     seeking: false // 触发进度条数据变化的flag
   };
 
+  // 外部数据导入（data）
+  @action applyData(data = []) {
+    if (data.length) {
+      this.audioData = data;
+      // 先初始化本地数据
+      this.setAudioData();
+    }
+  }
+
+  // 当前audio对象
+  getCurrentData = () => this.audioData[this.status.index] || {};
+
   // 获取player实例
   @action setPlayer(ref) {
     this.player = ref;
-  }
-
-  @action apply(data = []) {
-    this.lists = data;
   }
 
   @action setStatus(obj) {
@@ -44,6 +43,15 @@ class PlayerModel {
       ...this.status,
       ...obj
     };
+  }
+
+  // 加载audio数据
+  @action setAudioData() {
+    this.setStatus({
+      url: this.getCurrentData().url,
+      name: this.getCurrentData().name,
+      logo: this.getCurrentData().logo
+    });
   }
 
   // 总时长加载回调
@@ -62,7 +70,7 @@ class PlayerModel {
     }
   }
 
-  // 当前歌曲播放完毕
+  // audio播放完毕
   @action onEnded() {
     // 单曲循环
     if (this.status.loop) {
@@ -71,10 +79,10 @@ class PlayerModel {
       return;
     }
     // 顺序播放
-    if (this.hasNextSong) {
+    if (this.hasNextAudio) {
       // 自动下一曲
       this.status.duration = 0;
-      this.index += 1;
+      this.status.index += 1;
       this.play();
     } else {
       this.status.playing = false;
@@ -83,42 +91,43 @@ class PlayerModel {
 
   // 播放
   @action play() {
+    // 加载audio数据
+    this.setAudioData();
     this.status.playing = true;
   }
 
   // 播放/暂停
   @action togglePlay() {
-    const { playing } = this.status;
-    if (this.hasSong) {
-      this.status.playing = !playing;
+    if (this.hasAudioData) {
+      this.status.playing = !this.status.playing;
     }
   }
 
   // 上一曲
-  @action prevSong() {
-    if (this.hasPrevSong) {
+  @action prevAudio() {
+    if (this.hasPrevAudio) {
       this.status.duration = 0;
-      this.index -= 1;
+      this.status.index -= 1;
       this.play();
     }
   }
 
   // 下一曲
-  @action nextSong() {
-    if (this.hasNextSong) {
+  @action nextAudio() {
+    if (this.hasNextAudio) {
       this.status.duration = 0;
-      this.index += 1;
+      this.status.index += 1;
       this.play();
     }
   }
 
   // 根据索引播放
   @action playByIndex(index) {
-    if (this.index === index) {
+    if (this.status.index === index) {
       this.togglePlay();
     } else {
       this.status.duration = 0;
-      this.index = index;
+      this.status.index = index;
       this.play();
     }
   }
@@ -130,30 +139,24 @@ class PlayerModel {
 
   // 是否单曲循环
   @action toggleLoop() {
-    const { loop } = this.status;
-    this.status.loop = !loop;
+    this.status.loop = !this.status.loop;
   }
 
-  @computed get hasPrevSong() {
-    return this.index > 0;
+  // 播放速率切换
+  @action setPlaybackRate(playbackRate) {
+    this.status.playbackRate = playbackRate;
   }
 
-  @computed get hasNextSong() {
-    return this.index < this.length - 1;
+  @computed get hasPrevAudio() {
+    return this.status.index !== 0;
   }
 
-  @computed get hasSong() {
-    return this.length !== 0;
+  @computed get hasNextAudio() {
+    return this.status.index < this.audioData.length - 1;
   }
 
-  // 当前歌曲
-  @computed get song() {
-    if (!this.hasSong) return null;
-    return this.lists[this.index];
-  }
-
-  @computed get length() {
-    return this.lists.length;
+  @computed get hasAudioData() {
+    return this.audioData.length > 0;
   }
 }
 

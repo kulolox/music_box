@@ -23,17 +23,14 @@ const useStyles = makeStyles(theme => ({
 const Mlist = observer(() => {
   const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
-  const {
-    audioData,
-    status: { index }
-  } = playerModel;
+  const { lists, index } = playerModel;
   return (
     <Box width="50%" height="100%" color="#fff">
       <Box className={classes.head}>歌曲列表</Box>
       <Box height="calc(100% - 36px)" position="relative">
         <ScrollBarContainer>
           <List component="nav">
-            {audioData.map((data, i) => (
+            {lists.map((data, i) => (
               <ListItem
                 justifyContent="space-between"
                 key={data.id}

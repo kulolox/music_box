@@ -28,27 +28,27 @@ const Controller = observer(() => {
   const classes = useStyles();
   const {
     status: { playing },
-    hasPrevAudio,
-    hasNextAudio
+    hasNextSong,
+    hasPrevSong
   } = playerModel;
 
   const togglePlay = () => {
     playerModel.togglePlay();
   };
-  const prevAudio = () => {
-    playerModel.prevAudio();
+  const prevSong = () => {
+    playerModel.prevSong();
   };
-  const nextAudio = () => {
-    playerModel.nextAudio();
+  const nextSong = () => {
+    playerModel.nextSong();
   };
 
   return (
     <Grid container className={classes.controls}>
       <Grid item>
         <IconButton
-          className={!hasPrevAudio && classes.disabled}
-          onClick={prevAudio}
-          disabled={!hasPrevAudio}
+          className={!hasPrevSong && classes.disabled}
+          onClick={prevSong}
+          disabled={!hasPrevSong}
           aria-label="previous"
         >
           <SkipPreviousIcon color="disabled" />
@@ -65,9 +65,9 @@ const Controller = observer(() => {
       </Grid>
       <Grid item>
         <IconButton
-          className={!hasNextAudio && classes.disabled}
-          onClick={nextAudio}
-          disabled={!hasNextAudio}
+          className={!hasNextSong && classes.disabled}
+          onClick={nextSong}
+          disabled={!hasNextSong}
           aria-label="next"
         >
           <SkipNextIcon />

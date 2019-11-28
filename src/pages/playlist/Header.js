@@ -53,7 +53,8 @@ const Header = observer(({ data }) => {
   const request = useCallback(() => getSongs(ids), [ids]);
   const source = useGetData(request);
   if (!source) return null;
-  const songs = data.tracks.map(t => {
+  console.log('source:', source);
+  const songList = data.tracks.map(t => {
     return {
       id: t.id,
       name: t.name,
@@ -64,8 +65,8 @@ const Header = observer(({ data }) => {
     };
   });
   const setAudioData = () => {
-    if (songs.length > 0) {
-      playerModel.applyData(songs);
+    if (songList.length > 0) {
+      playerModel.apply(songList);
     }
   };
   const togglePlay = () => {

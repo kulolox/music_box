@@ -20,11 +20,8 @@ const useStyles = makeStyles(theme => ({
 const LyricBox = observer(() => {
   const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
-  const {
-    audioData,
-    status: { index }
-  } = playerModel;
-  const id = audioData.length > 0 ? audioData[index].id : null;
+  const { song } = playerModel;
+  const id = song ? song.id : null;
   const request = useCallback(() => {
     return getLyric(id);
   }, [id]);

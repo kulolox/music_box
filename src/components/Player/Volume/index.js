@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,6 +9,7 @@ import Fade from '@material-ui/core/Fade';
 import cssStyles from './index.module.scss';
 import InputRange from '@components/InputRange';
 
+@observer
 class Volume extends Component {
   static propTypes = {
     value: PropTypes.number.isRequired,

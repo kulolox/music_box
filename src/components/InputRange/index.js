@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { observer } from 'mobx-react';
 import cssStyles from './index.module.scss';
 
 // 根据播放进度，填充滑条
@@ -9,6 +9,7 @@ const setRangeStyle = (node, value) => {
     100}%, transparent ${value * 100}%)`;
 };
 
+@observer
 class InputRange extends Component {
   static propTypes = {
     min: PropTypes.number.isRequired,

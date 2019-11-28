@@ -12,7 +12,7 @@ import Mlist from './List';
 import LyricBox from './LyricBox';
 import { GlobalContext } from '@src/App';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   listContainer: {
     position: 'absolute',
     left: '50%',
@@ -31,7 +31,7 @@ const AudioList = observer(() => {
   const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const [showList, toggleList] = useState(false);
-  const { audioData } = playerModel;
+  const { length } = playerModel;
   return (
     <React.Fragment>
       <Fade in={showList}>
@@ -42,7 +42,7 @@ const AudioList = observer(() => {
       </Fade>
 
       <IconButton onClick={() => toggleList(prevState => !prevState)}>
-        <Badge badgeContent={audioData.length} color="secondary">
+        <Badge badgeContent={length} color="secondary">
           <PlaylistPlayIcon />
         </Badge>
       </IconButton>

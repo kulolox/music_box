@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Player from '@components/Player';
-import PlayerModel from '@stores/player';
+import PlayerModel from '@src/stores/player';
 // import Loading from '@components/Loading';
 
 const Home = React.lazy(() => import('@pages/home'));

@@ -26,7 +26,8 @@ const Player = observer(() => {
   const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const {
-    status: { url, playing, playbackRate, volume }
+    song,
+    status: { playing, volume }
   } = playerModel;
   const playerRef = useRef(null);
   if (playerRef.current) {
@@ -47,9 +48,8 @@ const Player = observer(() => {
       <Box display="none">
         <ReactPlayer
           ref={playerRef}
-          url={url}
+          url={song && song.url}
           playing={playing}
-          playbackRate={playbackRate}
           volume={volume}
           onProgress={onProgress}
           onDuration={onDuration}
