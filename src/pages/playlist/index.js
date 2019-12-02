@@ -21,7 +21,6 @@ export default function Playlist(props) {
   const request = useCallback(() => getPlaylist(id), [id]);
   const data = useGetData(request);
   if (!data) return <Loading />;
-  console.log('Playlist Data:', data);
   const { playlist } = data;
   return (
     <Container maxWidth="md" className={classes.details}>

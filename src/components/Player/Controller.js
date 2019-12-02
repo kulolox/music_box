@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -34,22 +34,15 @@ const Controller = observer(() => {
     hasPrevSong
   } = playerModel;
 
-  const togglePlay = () => {
-    playerModel.togglePlay();
-  };
-  const prevSong = () => {
-    playerModel.prevSong();
-  };
-  const nextSong = () => {
-    playerModel.nextSong();
-  };
-
+  const togglePlay = useCallback(() => playerModel.togglePlay(), [playerModel]);
+  const prevSong = useCallback(() => playerModel.prevSong(), [playerModel]);
+  const nextSong = useCallback(() => playerModel.nextSong(), [playerModel]);
   return (
     <Grid container className={classes.controls}>
       <Grid item>
         <Hidden xsDown>
           <IconButton
-            className={!hasPrevSong && classes.disabled}
+            className={!hasPrevSong ? classes.disabled : ''}
             onClick={prevSong}
             disabled={!hasPrevSong}
             aria-label="previous"
@@ -70,7 +63,7 @@ const Controller = observer(() => {
       <Hidden xsDown>
         <Grid item>
           <IconButton
-            className={!hasNextSong && classes.disabled}
+            className={!hasNextSong ? classes.disabled : ''}
             onClick={nextSong}
             disabled={!hasNextSong}
             aria-label="next"

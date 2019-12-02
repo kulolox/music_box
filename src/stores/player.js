@@ -36,7 +36,15 @@ class PlayerModel {
   }
 
   @action apply(data = []) {
+    // 载入数据，初始化
     this.lists = data;
+    this.index = 0;
+    this.setStatus({
+      playing: false,
+      played: 0,
+      playedSeconds: 0,
+      loaded: 0
+    });
   }
 
   @action setStatus(obj) {
@@ -113,12 +121,12 @@ class PlayerModel {
   }
 
   // 根据索引播放
-  @action playByIndex(index) {
-    if (this.index === index) {
+  @action playByIndex(i) {
+    if (this.index === i) {
       this.togglePlay();
     } else {
       this.status.duration = 0;
-      this.index = index;
+      this.index = i;
       this.play();
     }
   }

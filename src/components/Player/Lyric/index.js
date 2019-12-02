@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 
@@ -9,7 +9,6 @@ import { GlobalContext } from '@src/App';
 const d3 = require('d3-ease');
 
 const parseLyric = lyricStr => {
-  console.log('parseLyric');
   if (!lyricStr) return [];
   // 用于匹配时间的正则表达式，匹配的结果类似<p>[xx:xx.xx]</p>
   const pattern = /\[(\d{2}):(\d{2}\.\d{1,3})\]/gi;
@@ -83,6 +82,7 @@ const srcollToActiveLine = (containerDom, dom) => {
 
 const Lyric = observer(({ lyric }) => {
   const { playerModel } = React.useContext(GlobalContext);
+  const lineDom = React.useRef(document.getElementsByClassName(cssStyles.line));
   const {
     status: { playedSeconds }
   } = playerModel;
@@ -93,13 +93,12 @@ const Lyric = observer(({ lyric }) => {
     setFormatLyrics(parseLyric(lyric));
   }, [lyric]);
 
-  const lineDom = document.getElementsByClassName(cssStyles.line);
+  const index = getTimeIndex(playedSeconds, formatLyrics.map(lyr => lyr[0]));
 
   useEffect(() => {
-    const index = getTimeIndex(playedSeconds, formatLyrics.map(lyr => lyr[0]));
-    srcollToActiveLine(container, lineDom[index]);
+    srcollToActiveLine(container, lineDom.current[index]);
     setActiveIndex(index);
-  }, [playedSeconds]);
+  }, [playedSeconds, index, container, lineDom]);
 
   return (
     <ScrollBarContainer getRef={ref => setContainer(ref)}>

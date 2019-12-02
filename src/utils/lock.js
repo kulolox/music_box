@@ -11,13 +11,14 @@ async function lock(work, name = 'default') {
     await delay(1);
   }
   locks[name] = true;
-  try {
-    return await work();
-  } catch (e) {
-    throw e;
-  } finally {
-    delete locks[name];
-  }
+  return work();
+  // try {
+  //   return await work();
+  // } catch (e) {
+  //   throw e;
+  // } finally {
+  //   delete locks[name];
+  // }
 }
 
 export default lock;

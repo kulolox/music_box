@@ -6,7 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import Box from '@material-ui/core/Box';
 import Hidden from '@material-ui/core/Hidden';
-import Grid from '@material-ui/core/Grid';
 import Badge from '@material-ui/core/Badge';
 import Fade from '@material-ui/core/Fade';
 
@@ -39,14 +38,13 @@ const AudioList = observer(() => {
   return (
     <React.Fragment>
       <Fade in={showList}>
-        <Box container className={classes.listContainer}>
+        <Box className={classes.listContainer}>
           <Mlist />
           <Hidden xsDown>
             <LyricBox />
           </Hidden>
         </Box>
       </Fade>
-
       <IconButton onClick={() => toggleList(prevState => !prevState)}>
         <Badge badgeContent={length} color="secondary">
           <PlaylistPlayIcon />

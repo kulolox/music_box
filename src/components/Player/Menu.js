@@ -41,6 +41,8 @@ const Menu = observer(() => {
         <Grid item>
           <Volume value={volume} onChange={setVolume} />
         </Grid>
+      </Hidden>
+      <Hidden xsDown>
         <Grid item>
           <IconButton onClick={toggleLoop} aria-label="previous">
             {loop ? <RepeatOneIcon /> : <LoopIcon />}

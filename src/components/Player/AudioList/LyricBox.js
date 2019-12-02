@@ -29,13 +29,13 @@ const LyricBox = observer(() => {
   // 歌词变动可能性不大，使用缓存
   const data = useGetDataByAsyncCached(request, `lyric${id}`, 1000000);
   if (!data) return null;
-  console.log('data:', data);
+  const lyric = _.get(data, 'lrc.lyric', false);
   return (
     <Box flex="1" height="100%" color="#fff">
       <Box className={classes.head}>歌词</Box>
       <Box height="calc(100% - 36px)" position="relative">
-        {_.get(data, 'lyc.lyric', false) ? (
-          <Lyric lyric={data.lrc.lyric} />
+        {lyric ? (
+          <Lyric lyric={lyric} />
         ) : (
           <Box marginTop="35%" textAlign="center">
             暂无歌词

@@ -22,6 +22,6 @@ export default function useGetDataByAsyncCached(fn, cacheKey, cache = 0) {
       setData(result);
     };
     fetchData();
-  }, [fn]);
+  }, [fn, cacheKey, cache]);
   return data;
 }
