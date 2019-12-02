@@ -5,6 +5,7 @@ import LoopIcon from '@material-ui/icons/Loop';
 import RepeatOneIcon from '@material-ui/icons/RepeatOne';
 import Grid from '@material-ui/core/Grid';
 import { observer } from 'mobx-react';
+import Hidden from '@material-ui/core/Hidden';
 
 import Volume from '@components/Player/Volume';
 import AudioList from '@components/Player/AudioList';
@@ -36,14 +37,17 @@ const Menu = observer(() => {
 
   return (
     <Grid container className={classes.menu}>
-      <Grid item>
-        <Volume value={volume} onChange={setVolume} />
-      </Grid>
-      <Grid item>
-        <IconButton onClick={toggleLoop} aria-label="previous">
-          {loop ? <RepeatOneIcon /> : <LoopIcon />}
-        </IconButton>
-      </Grid>
+      <Hidden xsDown>
+        <Grid item>
+          <Volume value={volume} onChange={setVolume} />
+        </Grid>
+        <Grid item>
+          <IconButton onClick={toggleLoop} aria-label="previous">
+            {loop ? <RepeatOneIcon /> : <LoopIcon />}
+          </IconButton>
+        </Grid>
+      </Hidden>
+
       <Grid item>
         <AudioList />
       </Grid>

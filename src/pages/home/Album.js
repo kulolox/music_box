@@ -7,7 +7,8 @@ import Box from '@material-ui/core/Box';
 
 import { getAlbum } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
-import LineEllipsis from '@src/components/LineEllipsis';
+import LineEllipsis from '@components/LineEllipsis';
+import Loading from '@components/Loading';
 
 const useStyles = makeStyles(theme => ({
   label: {
@@ -64,7 +65,7 @@ export default function Album() {
     });
   }, [limit, order]);
   const data = useGetData(request);
-  if (!data) return null;
+  if (!data) return <Loading />;
   console.log('data:', data);
   const { playlists } = data;
   return (

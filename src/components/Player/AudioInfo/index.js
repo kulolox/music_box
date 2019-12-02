@@ -7,6 +7,7 @@ import classNames from 'classnames';
 
 import InputRange from '@src/components/InputRange';
 import Duration from '@components/Duration';
+import LineEllipsis from '@components/LineEllipsis';
 import desc_logo from '@src/assets/images/disc_logo.webp';
 import '@src/assets/css/animate.scss';
 
@@ -14,11 +15,11 @@ import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(() => ({
   main: {
-    width: 'calc(100% - 40px)',
+    width: '100%',
     lineHeight: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-around'
   },
   allTime: {
     color: '#dcdcdc',
@@ -66,28 +67,32 @@ const AudioInfo = observer(() => {
         className={classNames(classes.logo, { [classes.spin]: playing })}
       />
       <Box className={classes.main}>
-        <Box fontSize="12" mb="2" color="#fff">
-          {song ? song.name : '暂无歌曲'}
-        </Box>
-        <Box display="flex" alignItems="center">
-          <Box height={2} flex="1" bgcolor="#000" position="relative">
-            {/* 播放进度条 */}
-            <InputRange
-              min={0}
-              max={1}
-              value={played}
-              onChange={onSeekChange}
-              onMouseDown={onSeekMouseDown}
-              onMouseUp={onSeekMouseUp}
-            />
-            {/* 加载进度条 */}
-            <Box width={`${loaded * 100}%`} height="100%" bgcolor="#ccc" />
-          </Box>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          fontSize="12"
+          mb="2"
+          color="#fff"
+        >
+          <LineEllipsis text={song ? song.name : '暂无歌曲'} />
           {/* 时间显示器 */}
           <Box fontSize={12} color="#fff" ml={2} textAlign="center">
             <Duration seconds={playedSeconds} />
             <Duration className={classes.allTime} seconds={duration} />
           </Box>
+        </Box>
+        <Box height={2} bgcolor="#000" position="relative">
+          {/* 播放进度条 */}
+          <InputRange
+            min={0}
+            max={1}
+            value={played}
+            onChange={onSeekChange}
+            onMouseDown={onSeekMouseDown}
+            onMouseUp={onSeekMouseUp}
+          />
+          {/* 加载进度条 */}
+          <Box width={`${loaded * 100}%`} height="100%" bgcolor="#ccc" />
         </Box>
       </Box>
     </Box>

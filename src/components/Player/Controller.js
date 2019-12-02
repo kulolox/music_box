@@ -8,6 +8,8 @@ import PauseCircleOutlineOutlinedIcon from '@material-ui/icons/PauseCircleOutlin
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import Grid from '@material-ui/core/Grid';
 import { grey } from '@material-ui/core/colors';
+import Hidden from '@material-ui/core/Hidden';
+
 import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(theme => ({
@@ -45,14 +47,16 @@ const Controller = observer(() => {
   return (
     <Grid container className={classes.controls}>
       <Grid item>
-        <IconButton
-          className={!hasPrevSong && classes.disabled}
-          onClick={prevSong}
-          disabled={!hasPrevSong}
-          aria-label="previous"
-        >
-          <SkipPreviousIcon color="disabled" />
-        </IconButton>
+        <Hidden xsDown>
+          <IconButton
+            className={!hasPrevSong && classes.disabled}
+            onClick={prevSong}
+            disabled={!hasPrevSong}
+            aria-label="previous"
+          >
+            <SkipPreviousIcon color="disabled" />
+          </IconButton>
+        </Hidden>
       </Grid>
       <Grid item>
         <IconButton onClick={togglePlay} aria-label="play/pause">
@@ -63,16 +67,18 @@ const Controller = observer(() => {
           )}
         </IconButton>
       </Grid>
-      <Grid item>
-        <IconButton
-          className={!hasNextSong && classes.disabled}
-          onClick={nextSong}
-          disabled={!hasNextSong}
-          aria-label="next"
-        >
-          <SkipNextIcon />
-        </IconButton>
-      </Grid>
+      <Hidden xsDown>
+        <Grid item>
+          <IconButton
+            className={!hasNextSong && classes.disabled}
+            onClick={nextSong}
+            disabled={!hasNextSong}
+            aria-label="next"
+          >
+            <SkipNextIcon />
+          </IconButton>
+        </Grid>
+      </Hidden>
     </Grid>
   );
 });

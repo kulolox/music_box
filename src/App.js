@@ -4,12 +4,17 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Player from '@components/Player';
 import PlayerModel from '@src/stores/player';
-// import Loading from '@components/Loading';
+import Loading from '@components/Loading';
 
 const Home = React.lazy(() => import('@pages/home'));
 const Playlist = React.lazy(() => import('@pages/playlist'));
 
 const playerModel = new PlayerModel();
+
+// 尝试从缓存中读取歌曲列表
+const data = localStorage.getItem('songList');
+
+playerModel.apply(data ? JSON.parse(data) : []);
 
 export const GlobalContext = React.createContext();
 
@@ -19,7 +24,7 @@ function App() {
       <React.Fragment>
         <CssBaseline />
         <Router>
-          <React.Suspense fallback={null}>
+          <React.Suspense fallback={<Loading />}>
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/playlist/:id?" exact component={Playlist} />

@@ -53,7 +53,6 @@ const Header = observer(({ data }) => {
   const request = useCallback(() => getSongs(ids), [ids]);
   const source = useGetData(request);
   if (!source) return null;
-  console.log('source:', source);
   const songList = data.tracks.map(t => {
     return {
       id: t.id,
@@ -66,6 +65,8 @@ const Header = observer(({ data }) => {
   });
   const setAudioData = () => {
     if (songList.length > 0) {
+      // 添加缓存
+      localStorage.setItem('songList', JSON.stringify(songList));
       playerModel.apply(songList);
     }
   };

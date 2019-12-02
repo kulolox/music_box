@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
+import _ from 'lodash';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -28,16 +29,17 @@ const LyricBox = observer(() => {
   // 歌词变动可能性不大，使用缓存
   const data = useGetDataByAsyncCached(request, `lyric${id}`, 1000000);
   if (!data) return null;
+  console.log('data:', data);
   return (
     <Box width="50%" height="100%" color="#fff">
       <Box className={classes.head}>歌词</Box>
       <Box height="calc(100% - 36px)" position="relative">
-        {data.nolyric ? (
+        {_.get(data, 'lyc.lyric', false) ? (
+          <Lyric lyric={data.lrc.lyric} />
+        ) : (
           <Box marginTop="35%" textAlign="center">
             暂无歌词
           </Box>
-        ) : (
-          <Lyric lyric={data.lrc.lyric} />
         )}
       </Box>
     </Box>

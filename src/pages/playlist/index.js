@@ -7,6 +7,7 @@ import useGetData from '@src/hooks/useGetData';
 
 import Header from '@pages/playlist/Header';
 import SongList from '@pages/playlist/SongList';
+import Loading from '@src/components/Loading';
 
 const useStyles = makeStyles(() => ({
   details: {
@@ -19,7 +20,7 @@ export default function Playlist(props) {
   const { id } = props.match.params;
   const request = useCallback(() => getPlaylist(id), [id]);
   const data = useGetData(request);
-  if (!data) return null;
+  if (!data) return <Loading />;
   console.log('Playlist Data:', data);
   const { playlist } = data;
   return (
