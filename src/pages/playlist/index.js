@@ -7,7 +7,7 @@ import useGetData from '@src/hooks/useGetData';
 
 import Header from '@pages/playlist/Header';
 import SongList from '@pages/playlist/SongList';
-import Loading from '@src/components/Loading';
+import Loading from '@components/Loading';
 
 const useStyles = makeStyles(() => ({
   details: {

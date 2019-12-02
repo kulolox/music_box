@@ -47,7 +47,6 @@ const Menu = observer(() => {
           </IconButton>
         </Grid>
       </Hidden>
-
       <Grid item>
         <AudioList />
       </Grid>
