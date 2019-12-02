@@ -11,6 +11,7 @@ import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
 import ScrollBarContainer from '@components/ScrollBarContainer';
 import { GlobalContext } from '@src/App';
 import Duration from '@components/Duration';
+import LineEllipsis from '@components/LineEllipsis';
 
 const useStyles = makeStyles(theme => ({
   head: {
@@ -25,7 +26,7 @@ const Mlist = observer(() => {
   const classes = useStyles();
   const { lists, index } = playerModel;
   return (
-    <Box width="50%" height="100%" color="#fff">
+    <Box flex="1" minWidth="300px" height="100%" color="#fff">
       <Box className={classes.head}>歌曲列表</Box>
       <Box height="calc(100% - 36px)" position="relative">
         <ScrollBarContainer>
@@ -37,15 +38,19 @@ const Mlist = observer(() => {
                 onClick={() => playerModel.playByIndex(i)}
                 button
               >
-                <Box display="flex" width={30}>
+                <Box flexShrink="0" width={30}>
                   {index === i && (
                     <ArrowRightRoundedIcon style={{ color: 'red' }} />
                   )}
                 </Box>
                 <ListItemText
-                  primary={<Box fontSize="13px">{data.name}</Box>}
+                  primary={
+                    <Box fontSize="13px">
+                      <LineEllipsis text={data.name} />
+                    </Box>
+                  }
                 />
-                <Box fontSize="12px" padding="0 16px">
+                <Box fontSize="12px" padding="0 16px" whiteSpace="nowrap">
                   <span>{data.singer}</span>
                 </Box>
                 <Box fontSize="12px" padding="0 8px">

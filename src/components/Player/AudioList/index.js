@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import Box from '@material-ui/core/Box';
+import Hidden from '@material-ui/core/Hidden';
+import Grid from '@material-ui/core/Grid';
 import Badge from '@material-ui/core/Badge';
 import Fade from '@material-ui/core/Fade';
 
@@ -19,6 +21,8 @@ const useStyles = makeStyles(() => ({
     transform: 'translateX(-50%)',
     bottom: 48,
     height: 400,
+    maxWidth: 980,
+    width: '100%',
     borderRadius: '4px 4px 0 0',
     boxShadow: '0 -2px 4px 0 rgba(0,0,0,.2)',
     overflow: 'hidden',
@@ -35,9 +39,11 @@ const AudioList = observer(() => {
   return (
     <React.Fragment>
       <Fade in={showList}>
-        <Box width={980} className={classes.listContainer}>
+        <Box container className={classes.listContainer}>
           <Mlist />
-          <LyricBox />
+          <Hidden xsDown>
+            <LyricBox />
+          </Hidden>
         </Box>
       </Fade>
 

@@ -8,6 +8,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import Chip from '@material-ui/core/Chip';
 import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 import PlayCircleFilledWhiteOutlinedIcon from '@material-ui/icons/PlayCircleFilledWhiteOutlined';
 
 import { getSongs } from '@src/utils/api/get';
@@ -27,10 +28,10 @@ const useStyles = makeStyles(theme => ({
   logo: {
     border: '1px solid #dcdcdc',
     padding: 4,
-    marginRight: 24
+    display: 'inline-block'
   },
   author: {
-    marginBottom: 16
+    margin: '16px 0'
   },
   tags: {
     marginTop: 16,
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
   desc: {
     fontSize: 14,
-    marginTop: 8
+    marginTop: 16
   }
 }));
 
@@ -75,43 +76,54 @@ const Header = observer(({ data }) => {
   };
   return (
     <Card className={classes.header}>
-      <div className={classes.logo}>
-        <img src={data.coverImgUrl} alt="" />
-      </div>
-      <Box flex="1">
-        <Box mb={2} display="flex" alignItems="center">
-          <Box mr={1}>
-            <Chip
-              variant="outlined"
-              label="歌单"
-              color="secondary"
-              size="small"
-            />
+      <Grid container spacing={1}>
+        <Grid xs={12} md={3} item>
+          <div className={classes.logo}>
+            <img src={data.coverImgUrl} alt="" />
+          </div>
+        </Grid>
+        <Grid xs={12} md={9} item>
+          <Box flex="1">
+            <Box display="flex" alignItems="center">
+              <Box mr={1}>
+                <Chip
+                  variant="outlined"
+                  label="歌单"
+                  color="secondary"
+                  size="small"
+                />
+              </Box>
+              <Box fontSize={20}>{data.name}</Box>
+            </Box>
+            <Typography className={classes.author}>
+              {data.creator.nickname}
+            </Typography>
+            <ButtonGroup variant="contained" color="primary" size="small">
+              <Button
+                onClick={togglePlay}
+                startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
+              >
+                <Typography>播放</Typography>
+              </Button>
+              <Button onClick={setAudioData}>
+                <AddOutlinedIcon />
+              </Button>
+            </ButtonGroup>
+            <Box className={classes.tags}>
+              <span>标签：</span>
+              {data.tags.map((tag, i) => (
+                <Chip
+                  className={classes.tag}
+                  key={i}
+                  label={tag}
+                  size="small"
+                />
+              ))}
+            </Box>
+            <Typography className={classes.desc}>{data.description}</Typography>
           </Box>
-          <Box fontSize={20}>{data.name}</Box>
-        </Box>
-        <Typography className={classes.author}>
-          {data.creator.nickname}
-        </Typography>
-        <ButtonGroup variant="contained" color="primary" size="small">
-          <Button
-            onClick={togglePlay}
-            startIcon={<PlayCircleFilledWhiteOutlinedIcon />}
-          >
-            <Typography>播放</Typography>
-          </Button>
-          <Button onClick={setAudioData}>
-            <AddOutlinedIcon />
-          </Button>
-        </ButtonGroup>
-        <Box className={classes.tags}>
-          <span>标签：</span>
-          {data.tags.map((tag, i) => (
-            <Chip className={classes.tag} key={i} label={tag} size="small" />
-          ))}
-        </Box>
-        <Typography className={classes.desc}>{data.description}</Typography>
-      </Box>
+        </Grid>
+      </Grid>
     </Card>
   );
 });

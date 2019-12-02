@@ -11,7 +11,9 @@ import PlayCircleFilledWhiteOutlinedIcon from '@material-ui/icons/PlayCircleFill
 import PauseCircleOutlineOutlinedIcon from '@material-ui/icons/PauseCircleOutlineOutlined';
 
 import Duration from '@components/Duration';
+import LineEllipsis from '@components/LineEllipsis';
 import { GlobalContext } from '@src/App';
+import { Hidden } from '@material-ui/core';
 
 const SongList = observer(({ data }) => {
   const { playerModel } = React.useContext(GlobalContext);
@@ -33,10 +35,16 @@ const SongList = observer(({ data }) => {
       </Box>
       <List component="nav">
         {data.tracks.map((track, i) => (
-          <ListItem key={track.id} button>
-            <Box width={30} mr={2}>
-              {i + 1}
-            </Box>
+          <ListItem
+            key={track.id}
+            button
+            onClick={() => playerModel.playByIndex(i)}
+          >
+            <Hidden xsDown>
+              <Box width={30} mr={2}>
+                {i + 1}
+              </Box>
+            </Hidden>
             <ListItemIcon>
               {index === i && playing ? (
                 <PauseCircleOutlineOutlinedIcon />
@@ -44,8 +52,8 @@ const SongList = observer(({ data }) => {
                 <PlayCircleFilledWhiteOutlinedIcon />
               )}
             </ListItemIcon>
-            <ListItemText primary={track.name} />
-            <Box fontSize="12px" padding="0 16px">
+            <ListItemText primary={<LineEllipsis text={track.name} />} />
+            <Box fontSize="12px" padding="0 16px" whiteSpace="nowrap">
               <span>{track.ar[0].name}</span>
             </Box>
             <Box fontSize="12px" padding="0 16px">

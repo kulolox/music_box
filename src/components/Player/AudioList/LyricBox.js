@@ -31,7 +31,7 @@ const LyricBox = observer(() => {
   if (!data) return null;
   console.log('data:', data);
   return (
-    <Box width="50%" height="100%" color="#fff">
+    <Box flex="1" height="100%" color="#fff">
       <Box className={classes.head}>歌词</Box>
       <Box height="calc(100% - 36px)" position="relative">
         {_.get(data, 'lyc.lyric', false) ? (

@@ -66,7 +66,6 @@ export default function Album() {
   }, [limit, order]);
   const data = useGetData(request);
   if (!data) return <Loading />;
-  console.log('data:', data);
   const { playlists } = data;
   return (
     <React.Fragment>
