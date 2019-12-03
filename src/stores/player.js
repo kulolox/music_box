@@ -10,6 +10,7 @@ class PlayerModel {
    *    time, 歌曲总时长
    *    logo, 歌曲logo
    *    singer, 歌手
+   *    canPlay, 歌手
    * }]
    *  */
   @observable lists = [];
@@ -107,6 +108,9 @@ class PlayerModel {
     if (this.hasPrevSong) {
       this.status.duration = 0;
       this.index -= 1;
+      if (!this.song.canPlay) {
+        this.index -= 1;
+      }
       this.play();
     }
   }

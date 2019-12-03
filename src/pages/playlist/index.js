@@ -21,11 +21,11 @@ export default function Playlist(props) {
   const request = useCallback(() => getPlaylist(id), [id]);
   const data = useGetData(request);
   if (!data) return <Loading />;
-  const { playlist } = data;
+  console.log('data:', data);
   return (
     <Container maxWidth="md" className={classes.details}>
-      <Header data={playlist} />
-      <SongList data={playlist} />
+      <Header data={data} />
+      <SongList data={data} />
     </Container>
   );
 }

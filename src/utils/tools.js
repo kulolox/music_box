@@ -10,6 +10,21 @@ export const strToHtml = s => {
 };
 
 /**
+ * 判断音乐是否可以播放
+ * @param {Object} privileges 原始字符串
+ * @returns {Boolean}
+ */
+export const checkMusic = privilege => {
+  return (
+    privilege.st !== -1 &&
+    privilege.st !== -200 &&
+    privilege.fee !== 1 &&
+    privilege.fee !== 4 &&
+    privilege.fee !== 16
+  );
+};
+
+/**
  * Is subject is a Object or not
  * @param {*} subject
  * @return {boolean}

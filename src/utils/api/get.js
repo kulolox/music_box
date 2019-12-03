@@ -18,5 +18,6 @@ export const getSongs = ids => {
 };
 
 export const getLyric = id => {
+  // if (!id) return () => {};
   return axios.get(`${basicUrl}/lyric?id=${id}`);
 };

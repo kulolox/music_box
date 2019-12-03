@@ -14,7 +14,7 @@ import { GlobalContext } from '@src/App';
 import Duration from '@components/Duration';
 import LineEllipsis from '@components/LineEllipsis';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   head: {
     background: 'rgba(0,0,0,0.8)',
     padding: '8px 16px',

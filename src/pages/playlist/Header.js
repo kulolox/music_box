@@ -16,6 +16,7 @@ import { getSongs } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 import { GlobalContext } from '@src/App';
 import Loading from '@src/components/Loading';
+import { checkMusic } from '@src/utils/tools';
 
 const useStyles = makeStyles(theme => ({
   logo: {
@@ -45,13 +46,20 @@ const useStyles = makeStyles(theme => ({
 
 const Header = observer(({ data }) => {
   const { playerModel } = React.useContext(GlobalContext);
+  const { playlist, privileges } = data;
   const classes = useStyles();
-  const ids = data.trackIds.map(t => t.id).join(',');
-  const request = useCallback(() => getSongs(ids), [ids]);
+  const request = useCallback(() => {
+    const idstring = playlist.trackIds.map(t => t.id).join(',');
+    return getSongs(idstring);
+  }, [data.trackIds]);
   const togglePlay = useCallback(() => playerModel.togglePlay(), [playerModel]);
   const source = useGetData(request);
+
   if (!source) return <Loading />;
-  const songList = data.tracks.map(t => ({
+
+  console.log('source:', source);
+
+  const songList = playlist.tracks.map((t, i) => ({
     id: t.id,
     name: t.name,
     logo: t.al.picUrl,
@@ -73,7 +81,7 @@ const Header = observer(({ data }) => {
         <Grid container spacing={2}>
           <Grid xs={12} md={3} item>
             <div className={classes.logo}>
-              <img src={data.coverImgUrl} alt="" />
+              <img src={playlist.coverImgUrl} alt="" />
             </div>
           </Grid>
           <Grid xs={12} md={9} item>
@@ -87,10 +95,10 @@ const Header = observer(({ data }) => {
                     size="small"
                   />
                 </Box>
-                <Box fontSize={20}>{data.name}</Box>
+                <Box fontSize={20}>{playlist.name}</Box>
               </Box>
               <Typography className={classes.author}>
-                {data.creator.nickname}
+                {playlist.creator.nickname}
               </Typography>
               <ButtonGroup variant="contained" color="primary" size="small">
                 <Button
@@ -105,7 +113,7 @@ const Header = observer(({ data }) => {
               </ButtonGroup>
               <Box className={classes.tags}>
                 <Typography variant="body2">标签：</Typography>
-                {data.tags.map((tag, i) => (
+                {playlist.tags.map((tag, i) => (
                   <Chip
                     className={classes.tag}
                     key={i}
@@ -115,7 +123,7 @@ const Header = observer(({ data }) => {
                 ))}
               </Box>
               <Typography variant="body2" className={classes.desc}>
-                {data.description}
+                {playlist.description}
               </Typography>
             </Box>
           </Grid>
