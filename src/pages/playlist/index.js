@@ -2,12 +2,12 @@ import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import { getPlaylist } from '@utils/api/get';
+import { getPlaylist } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 
-import Header from '@pages/playlist/Header';
-import SongList from '@pages/playlist/SongList';
-import Loading from '@components/Loading';
+import Header from '@src/pages/playlist/Header';
+import SongList from '@src/pages/playlist/SongList';
+import Loading from '@src/components/Loading';
 
 const useStyles = makeStyles(() => ({
   details: {

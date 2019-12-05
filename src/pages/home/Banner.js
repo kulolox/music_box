@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Swiper from '@src/components/Swiper';
-import { getBanner } from '@src/utils/api/get';
 import useGetDataByAsyncCached from '@src/hooks/useGetDataByAsyncCached';
 import Loading from '@src/components/Loading';
+import { getBanner } from '@src/utils/api/get';
 
 const useStyles = makeStyles(theme => ({
   item: {

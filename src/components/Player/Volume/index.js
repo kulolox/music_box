@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Fade from '@material-ui/core/Fade';
 
 import cssStyles from './index.module.scss';
-import InputRange from '@components/InputRange';
+import InputRange from '@src/components/InputRange';
 
 @observer
 class Volume extends Component {

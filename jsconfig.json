@@ -6,12 +6,7 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@stores/*": ["./src/stores/*"],
-      "@models/*": ["./src/models/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@pages/*": ["./src/pages/*"]
+      "@src/*": ["./src/*"]
     }
   },
   "exclude": ["dist", "node_modules"]

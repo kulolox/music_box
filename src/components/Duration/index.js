@@ -6,7 +6,7 @@ const getDate = seconds => {
   return new Date(seconds * 1000);
 };
 
-const Duration = ({ className, seconds }) => {
+export default function Duration({ className, seconds }) {
   return (
     <span className={className}>
       {moment(getDate(seconds))
@@ -14,7 +14,7 @@ const Duration = ({ className, seconds }) => {
         .format('HH:mm:ss')}
     </span>
   );
-};
+}
 
 Duration.propTypes = {
   className: PropTypes.string,
@@ -24,5 +24,3 @@ Duration.propTypes = {
 Duration.defaultProps = {
   className: ''
 };
-
-export default Duration;

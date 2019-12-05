@@ -1,5 +1,5 @@
 import 'swiper/css/swiper.min.css';
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -58,20 +58,20 @@ export default function Swiper({ speed = 4000, navigation = false, children }) {
   const classes = useStyles();
   const [isOneChild] = useState(!Array.isArray(children));
   // 轮播控制器
-  let swiper = null;
+  const swiper = useRef(null);
+
   const getSwiper = ref => {
-    swiper = ref;
+    swiper.current = ref;
   };
-  const goNext = () => {
-    if (swiper !== null) {
-      swiper.slideNext();
-    }
-  };
-  const goPrev = () => {
-    if (swiper !== null) {
-      swiper.slidePrev();
-    }
-  };
+
+  const goNext = useCallback(() => {
+    swiper.current.slideNext();
+  }, []);
+
+  const goPrev = useCallback(() => {
+    swiper.current.slidePrev();
+  }, []);
+
   // 轮播配置
   let params = {};
   if (!isOneChild) {

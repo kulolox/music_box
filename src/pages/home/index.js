@@ -2,8 +2,8 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Album from '@pages/home/Album';
-import Banner from '@pages/home/Banner';
+import Album from '@src/pages/home/Album';
+import Banner from '@src/pages/home/Banner';
 
 const useStyles = makeStyles(() => ({
   home: {

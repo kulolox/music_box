@@ -2,12 +2,12 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Player from '@components/Player';
 import PlayerModel from '@src/stores/player';
-import Loading from '@components/Loading';
+import Player from '@src/components/Player';
+import Loading from '@src/components/Loading';
 
-const Home = React.lazy(() => import('@pages/home'));
-const Playlist = React.lazy(() => import('@pages/playlist'));
+const Home = React.lazy(() => import('@src/pages/home'));
+const Playlist = React.lazy(() => import('@src/pages/playlist'));
 
 const playerModel = new PlayerModel();
 

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -14,10 +14,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import PlayCircleFilledWhiteOutlinedIcon from '@material-ui/icons/PlayCircleFilledWhiteOutlined';
 
-import Duration from '@components/Duration';
-import LineEllipsis from '@components/LineEllipsis';
-import { GlobalContext } from '@src/App';
-// import { checkMusic } from '@src/utils/tools';
+import Duration from '@src/components/Duration';
+import LineEllipsis from '@src/components/LineEllipsis';
+// import { GlobalContext } from '@src/App';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -43,18 +42,19 @@ const StyledTableRow = withStyles(theme => ({
   }
 }))(TableRow);
 
-const SongList = observer(({ data }) => {
+function SongList({ data }) {
   const classes = useStyles();
-  const { playlist, privileges } = data;
-  const { playerModel } = React.useContext(GlobalContext);
+  // privileges
+  const { playlist } = data;
+  // const { playerModel } = React.useContext(GlobalContext);
   // const {
   //   lists,
   //   index,
   //   status: { playing }
   // } = playerModel;
-  const playByIndex = useCallback(i => playerModel.playByIndex(i), [
-    playerModel
-  ]);
+  // const playByIndex = useCallback(i => playerModel.playByIndex(i), [
+  //   playerModel
+  // ]);
 
   return (
     <Card className={classes.container}>
@@ -103,6 +103,6 @@ const SongList = observer(({ data }) => {
       </CardContent>
     </Card>
   );
-});
+}
 
-export default SongList;
+export default observer(SongList);

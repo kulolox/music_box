@@ -14,7 +14,7 @@ const style = {
   alignItems: 'center'
 };
 
-const Loading = () => {
+export default function Loading() {
   return (
     <div style={style}>
       <div className="spinner">
@@ -39,6 +39,4 @@ const Loading = () => {
       </div>
     </div>
   );
-};
-
-export default Loading;
+}

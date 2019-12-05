@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -16,7 +17,6 @@ import { getSongs } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 import { GlobalContext } from '@src/App';
 import Loading from '@src/components/Loading';
-import { checkMusic } from '@src/utils/tools';
 
 const useStyles = makeStyles(theme => ({
   logo: {
@@ -44,14 +44,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Header = observer(({ data }) => {
+function Header({ data }) {
   const { playerModel } = React.useContext(GlobalContext);
-  const { playlist, privileges } = data;
+  const { playlist } = data;
   const classes = useStyles();
   const request = useCallback(() => {
     const idstring = playlist.trackIds.map(t => t.id).join(',');
     return getSongs(idstring);
-  }, [data.trackIds]);
+  }, [playlist.trackIds]);
   const togglePlay = useCallback(() => playerModel.togglePlay(), [playerModel]);
   const source = useGetData(request);
 
@@ -131,6 +131,6 @@ const Header = observer(({ data }) => {
       </CardContent>
     </Card>
   );
-});
+}
 
-export default Header;
+export default observer(Header);

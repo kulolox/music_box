@@ -11,8 +11,8 @@ import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 
 import ScrollBarContainer from '@components/ScrollBarContainer';
 import { GlobalContext } from '@src/App';
-import Duration from '@components/Duration';
-import LineEllipsis from '@components/LineEllipsis';
+import Duration from '@src/components/Duration';
+import LineEllipsis from '@src/components/LineEllipsis';
 
 const useStyles = makeStyles(() => ({
   head: {

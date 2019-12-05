@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
-import Lyric from '@components/Player/Lyric';
+import Lyric from '@src/components/Player/Lyric';
 import { getLyric } from '@src/utils/api/get';
 import { GlobalContext } from '@src/App';
 import useGetDataByAsyncCached from '@src/hooks/useGetDataByAsyncCached';
