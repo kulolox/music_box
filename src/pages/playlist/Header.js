@@ -17,6 +17,7 @@ import { getSongs } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 import { GlobalContext } from '@src/App';
 import Loading from '@src/components/Loading';
+import { checkMusic } from '@src/utils/tools';
 
 const useStyles = makeStyles(theme => ({
   logo: {
@@ -45,10 +46,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Header({ data }) {
-  const { playerModel } = React.useContext(GlobalContext);
-  console.log('data:', data);
-  const { playlist } = data;
   const classes = useStyles();
+
+  const { playerModel } = React.useContext(GlobalContext);
+  const { playlist, privileges } = data;
   const request = useCallback(() => {
     const idstring = playlist.trackIds.map(t => t.id).join(',');
     return getSongs(idstring);
@@ -60,14 +61,19 @@ function Header({ data }) {
 
   console.log('source:', source);
 
-  const songList = playlist.tracks.map(t => ({
-    id: t.id,
-    name: t.name,
-    logo: t.al.picUrl,
-    time: t.dt,
-    singer: t.ar[0].name,
-    url: source.data.find(o => o.id === t.id).url
-  }));
+  // 无法播放歌曲id列表
+  const unPlay = privileges.filter(t => !checkMusic(t)).map(t => t.id);
+  // 过滤无法播放的歌曲
+  const songList = playlist.tracks
+    .filter(t => !unPlay.includes(t.id))
+    .map(t => ({
+      id: t.id,
+      name: t.name,
+      logo: t.al.picUrl,
+      time: t.dt,
+      singer: t.ar[0].name,
+      url: source.data.find(o => o.id === t.id).url
+    }));
   const setAudioData = () => {
     if (songList.length > 0) {
       // 添加缓存
