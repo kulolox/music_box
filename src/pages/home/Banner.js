@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Swiper from '@src/components/Swiper';
-import useGetDataByAsyncCached from '@src/hooks/useGetDataByAsyncCached';
 import Loading from '@src/components/Loading';
 import { getBanner } from '@src/utils/api/get';
+import useGetData from '@src/hooks/useGetData';
 
 const useStyles = makeStyles(theme => ({
   item: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 export default function Banner() {
   const classes = useStyles();
   const request = useCallback(() => getBanner(0), []);
-  const data = useGetDataByAsyncCached(request, 'banner', 60);
+  const data = useGetData(request);
   if (!data) return <Loading />;
   const { banners } = data;
   return (

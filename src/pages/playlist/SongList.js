@@ -9,18 +9,23 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import PlayCircleFilledWhiteOutlinedIcon from '@material-ui/icons/PlayCircleFilledWhiteOutlined';
 
 import Duration from '@src/components/Duration';
 import LineEllipsis from '@src/components/LineEllipsis';
-// import { GlobalContext } from '@src/App';
+import { Hidden } from '@material-ui/core';
+import { checkMusic } from '@src/utils/tools';
 
 const useStyles = makeStyles(() => ({
-  container: {
-    marginTop: 16
+  root: {
+    marginTop: 16,
+    '& .MuiTableRow-root.Mui-selected': {
+      background: '#f4f4f4'
+    },
+    '& .MuiTableRow-root.Mui-selected td': {
+      color: '#ccc'
+    }
   }
 }));
 
@@ -36,6 +41,9 @@ const StyledTableCell = withStyles(theme => ({
 
 const StyledTableRow = withStyles(theme => ({
   root: {
+    '&:nth-of-type(even)': {
+      backgroundColor: '#f2f2f2'
+    },
     '&:nth-of-type(odd)': {
       backgroundColor: '#dcdcdc'
     }
@@ -44,22 +52,11 @@ const StyledTableRow = withStyles(theme => ({
 
 function SongList({ data }) {
   const classes = useStyles();
-  // privileges
-  const { playlist } = data;
-  // const { playerModel } = React.useContext(GlobalContext);
-  // const {
-  //   lists,
-  //   index,
-  //   status: { playing }
-  // } = playerModel;
-  // const playByIndex = useCallback(i => playerModel.playByIndex(i), [
-  //   playerModel
-  // ]);
-
+  const { playlist, privileges } = data;
   return (
-    <Card className={classes.container}>
+    <Card className={classes.root}>
       <CardContent>
-        <Box display="flex" alignItems="flex-end" paddingLeft={2}>
+        <Box display="flex" alignItems="flex-end" pl={2}>
           <Box fontSize={20} mr={4}>
             歌曲列表
           </Box>
@@ -68,7 +65,9 @@ function SongList({ data }) {
         <Table size="small" className={classes.table} aria-label="song list">
           <TableHead>
             <TableRow>
-              <StyledTableCell></StyledTableCell>
+              <Hidden xsDown>
+                <StyledTableCell></StyledTableCell>
+              </Hidden>
               <StyledTableCell>歌曲标题</StyledTableCell>
               <StyledTableCell>时长</StyledTableCell>
               <StyledTableCell>歌手</StyledTableCell>
@@ -76,26 +75,24 @@ function SongList({ data }) {
           </TableHead>
           <TableBody>
             {playlist.tracks.map((track, i) => (
-              <StyledTableRow key={track.id}>
-                <StyledTableCell component="th" scope="row">
-                  <Box
-                    display="flex"
-                    width="64px"
-                    justifyContent="space-between"
-                  >
+              <StyledTableRow
+                key={track.id}
+                selected={!checkMusic(privileges[i])}
+              >
+                <Hidden xsDown>
+                  <StyledTableCell size="small">
                     <Typography variant="body1">{i + 1}</Typography>
-                    <IconButton size="small">
-                      <PlayCircleFilledWhiteOutlinedIcon />
-                    </IconButton>
-                  </Box>
-                </StyledTableCell>
-                <StyledTableCell component="th" scope="row">
+                  </StyledTableCell>
+                </Hidden>
+                <StyledTableCell size="small">
                   <LineEllipsis text={track.name} />
                 </StyledTableCell>
-                <StyledTableCell>
+                <StyledTableCell size="small">
                   <Duration seconds={track.dt / 1000} />
                 </StyledTableCell>
-                <StyledTableCell>{track.ar[0].name}</StyledTableCell>
+                <StyledTableCell size="small">
+                  {track.ar[0].name}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

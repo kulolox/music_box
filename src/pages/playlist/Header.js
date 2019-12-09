@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 function Header({ data }) {
   const { playerModel } = React.useContext(GlobalContext);
+  console.log('data:', data);
   const { playlist } = data;
   const classes = useStyles();
   const request = useCallback(() => {
@@ -59,7 +60,7 @@ function Header({ data }) {
 
   console.log('source:', source);
 
-  const songList = playlist.tracks.map((t, i) => ({
+  const songList = playlist.tracks.map(t => ({
     id: t.id,
     name: t.name,
     logo: t.al.picUrl,
