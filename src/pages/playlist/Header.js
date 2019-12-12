@@ -47,7 +47,6 @@ const useStyles = makeStyles(theme => ({
 
 function Header({ data }) {
   const classes = useStyles();
-
   const { playerModel } = React.useContext(GlobalContext);
   const { playlist, privileges } = data;
   const request = useCallback(() => {
