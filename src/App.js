@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PlayerModel from '@src/stores/player';
 import Player from '@src/components/Player';
 import Loading from '@src/components/Loading';
+import useLocalStorage from '@src/hooks/useLocalStorage';
 
 const Home = React.lazy(() => import('@src/pages/home'));
 const Playlist = React.lazy(() => import('@src/pages/playlist'));
