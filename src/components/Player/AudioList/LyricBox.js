@@ -23,15 +23,12 @@ const LyricBox = () => {
   const classes = useStyles();
   const { song } = playerModel;
   const id = song ? song.id : null;
-  console.log('id:', id);
   const request = useCallback(() => {
     return getLyric(id);
   }, [id]);
   const data = useGetData(request, `lyric${id}`, 1000000);
   const lyric = useMemo(() => _.get(data, 'lrc.lyric', false), [data]);
   if (!data) return null;
-  console.log('data:', data);
-  console.log('lyricBox:', lyric);
   return (
     <Box flex="1" height="100%" color="#fff">
       <Box className={classes.head}>歌词</Box>
