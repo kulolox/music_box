@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
@@ -30,7 +28,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const AudioList = observer(() => {
+const AudioList = () => {
   const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const [showList, toggleList] = useState(false);
@@ -52,6 +50,6 @@ const AudioList = observer(() => {
       </IconButton>
     </React.Fragment>
   );
-});
+};
 
 export default AudioList;

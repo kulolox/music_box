@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { observer } from 'mobx-react';
 import _ from 'lodash';
 
@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Lyric from '@src/components/Player/Lyric';
 import { getLyric } from '@src/utils/api/get';
 import { GlobalContext } from '@src/App';
-import useGetDataByAsyncCached from '@src/hooks/useGetDataByAsyncCached';
+import useGetData from '@src/hooks/useGetData';
 
 const useStyles = makeStyles(theme => ({
   head: {
@@ -18,18 +18,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LyricBox = observer(() => {
+const LyricBox = () => {
   const { playerModel } = React.useContext(GlobalContext);
   const classes = useStyles();
   const { song } = playerModel;
   const id = song ? song.id : null;
+  console.log('id:', id);
   const request = useCallback(() => {
     return getLyric(id);
   }, [id]);
-  // 歌词变动可能性不大，使用缓存
-  const data = useGetDataByAsyncCached(request, `lyric${id}`, 1000000);
+  const data = useGetData(request, `lyric${id}`, 1000000);
+  const lyric = useMemo(() => _.get(data, 'lrc.lyric', false), [data]);
   if (!data) return null;
-  const lyric = _.get(data, 'lrc.lyric', false);
+  console.log('data:', data);
+  console.log('lyricBox:', lyric);
   return (
     <Box flex="1" height="100%" color="#fff">
       <Box className={classes.head}>歌词</Box>
@@ -44,6 +46,6 @@ const LyricBox = observer(() => {
       </Box>
     </Box>
   );
-});
+};
 
-export default LyricBox;
+export default observer(LyricBox);

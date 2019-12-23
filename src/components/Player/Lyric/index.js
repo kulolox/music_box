@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 
@@ -80,25 +80,23 @@ const srcollToActiveLine = (containerDom, dom) => {
   }
 };
 
-const Lyric = observer(({ lyric }) => {
+const Lyric = ({ lyric }) => {
   const { playerModel } = React.useContext(GlobalContext);
-  const lineDom = React.useRef(document.getElementsByClassName(cssStyles.line));
+  const lyricDom = React.useRef(
+    document.getElementsByClassName(cssStyles.line)
+  );
   const {
     status: { playedSeconds }
   } = playerModel;
-  const [formatLyrics, setFormatLyrics] = useState([]);
+  const formatLyrics = useMemo(() => parseLyric(lyric), [lyric]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [container, setContainer] = useState(null);
-  useEffect(() => {
-    setFormatLyrics(parseLyric(lyric));
-  }, [lyric]);
-
-  const index = getTimeIndex(playedSeconds, formatLyrics.map(lyr => lyr[0]));
 
   useEffect(() => {
-    srcollToActiveLine(container, lineDom.current[index]);
+    const index = getTimeIndex(playedSeconds, formatLyrics.map(lyr => lyr[0]));
     setActiveIndex(index);
-  }, [playedSeconds, index, container, lineDom]);
+    srcollToActiveLine(container, lyricDom.current[index]);
+  }, [playedSeconds, container, formatLyrics]);
 
   return (
     <ScrollBarContainer getRef={ref => setContainer(ref)}>
@@ -116,6 +114,6 @@ const Lyric = observer(({ lyric }) => {
       </div>
     </ScrollBarContainer>
   );
-});
+};
 
-export default Lyric;
+export default React.memo(observer(Lyric));

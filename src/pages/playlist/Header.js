@@ -58,8 +58,6 @@ function Header({ data }) {
 
   if (!source) return <Loading />;
 
-  console.log('source:', source);
-
   // 无法播放歌曲id列表
   const unPlay = privileges.filter(t => !checkMusic(t)).map(t => t.id);
   // 过滤无法播放的歌曲

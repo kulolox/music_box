@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import asyncCached from '@src/utils/asyncCache';
 /**
  * get请求公共hook
@@ -9,12 +9,17 @@ import asyncCached from '@src/utils/asyncCache';
  */
 export default function useGetDataByAsyncCached(fn, cacheKey, cache = 0) {
   const [data, setData] = useState(null);
+  const saveFn = useRef();
+  useEffect(() => {
+    saveFn.current = fn;
+  }, [fn]);
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await asyncCached(
         cacheKey,
         async () => {
-          const t = await fn();
+          const t = await saveFn.current();
           return t.data;
         },
         cache
@@ -22,6 +27,6 @@ export default function useGetDataByAsyncCached(fn, cacheKey, cache = 0) {
       setData(result);
     };
     fetchData();
-  }, [fn, cacheKey, cache]);
+  }, [cacheKey, cache]);
   return data;
 }
