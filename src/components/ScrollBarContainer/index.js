@@ -1,31 +1,24 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import cssStyles from './index.module.scss';
 
 class ScrollBarContainer extends Component {
-  static propTypes = {
-    className: PropTypes.string
-  };
-
-  static defaultProps = {
-    className: ''
-  };
-
   constructor(props) {
     super(props);
     this.listContainer = React.createRef();
   }
 
   state = {
-    slideBlockStyle: {}
+    slideBlockStyle: {},
+    hasScrollBar: true
   };
 
   componentDidMount() {
     if (this.props.getRef) {
       this.props.getRef(this.listContainer.current);
     }
+    // 初始化滚动条
     this.parseDom(this.listContainer.current);
     this.listContainer.current.addEventListener('scroll', this.handelScroll);
   }
@@ -49,8 +42,15 @@ class ScrollBarContainer extends Component {
     const slideBlockTop =
       (scrollTop * (clientHeight - slideBlockHeight)) /
       (scrollHeight - clientHeight);
-    if (isNaN(slideBlockTop)) return;
+    // eslint-disable-next-line no-restricted-globals
+    if (isNaN(slideBlockTop)) {
+      this.setState({
+        hasScrollBar: false
+      });
+      return;
+    }
     this.setState({
+      hasScrollBar: true,
       slideBlockStyle: {
         height: slideBlockHeight,
         top: slideBlockTop
@@ -62,9 +62,11 @@ class ScrollBarContainer extends Component {
     const { children, className } = this.props;
     return (
       <div className={classNames(cssStyles.listContainer, className)}>
-        <div className={cssStyles.scrollBar}>
-          <span style={{ ...this.state.slideBlockStyle }} />
-        </div>
+        {this.state.hasScrollBar && (
+          <div className={cssStyles.scrollBar}>
+            <span style={{ ...this.state.slideBlockStyle }} />
+          </div>
+        )}
         <div ref={this.listContainer} className={cssStyles.scrollContent}>
           {children}
         </div>
