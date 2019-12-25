@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import cssStyles from './index.module.scss';
 
 class ScrollBarContainer extends Component {
+  static propTypes = {
+    className: PropTypes.string
+  };
+
+  static defaultProps = {
+    className: ''
+  };
+
   constructor(props) {
     super(props);
     this.listContainer = React.createRef();
   }
 
   state = {
-    showList: false,
-    top: 0
+    slideBlockStyle: {}
   };
 
   componentDidMount() {
     if (this.props.getRef) {
       this.props.getRef(this.listContainer.current);
     }
+    this.parseDom(this.listContainer.current);
     this.listContainer.current.addEventListener('scroll', this.handelScroll);
   }
 
@@ -49,9 +59,9 @@ class ScrollBarContainer extends Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, className } = this.props;
     return (
-      <div className={cssStyles.listContainer}>
+      <div className={classNames(cssStyles.listContainer, className)}>
         <div className={cssStyles.scrollBar}>
           <span style={{ ...this.state.slideBlockStyle }} />
         </div>
