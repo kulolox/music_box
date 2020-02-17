@@ -1,37 +1,18 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 
 import cssStyles from './index.module.scss';
 
-class ScrollBarContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.listContainer = React.createRef();
-  }
+export default function ScrollBarContainer({
+  children,
+  className,
+  getRef = () => {}
+}) {
+  const container = React.useRef();
+  const [slideBlockStyle, setSlideBlockStyle] = React.useState();
+  const [hasScrollBar, setHasScrollBar] = React.useState(true);
 
-  state = {
-    slideBlockStyle: {},
-    hasScrollBar: true
-  };
-
-  componentDidMount() {
-    if (this.props.getRef) {
-      this.props.getRef(this.listContainer.current);
-    }
-    // 初始化滚动条
-    this.parseDom(this.listContainer.current);
-    this.listContainer.current.addEventListener('scroll', this.handelScroll);
-  }
-
-  componentWillUnmount() {
-    this.listContainer.current.removeEventListener('scroll', this.handelScroll);
-  }
-
-  handelScroll = e => {
-    this.parseDom(e.target);
-  };
-
-  parseDom = dom => {
+  const parseDom = React.useCallback((dom = container.current) => {
     if (!dom) return;
     const clientHeight = dom.clientHeight;
     const scrollHeight = dom.scrollHeight;
@@ -42,37 +23,43 @@ class ScrollBarContainer extends Component {
     const slideBlockTop =
       (scrollTop * (clientHeight - slideBlockHeight)) /
       (scrollHeight - clientHeight);
-    // eslint-disable-next-line no-restricted-globals
     if (isNaN(slideBlockTop)) {
-      this.setState({
-        hasScrollBar: false
-      });
+      setHasScrollBar(false);
       return;
     }
-    this.setState({
-      hasScrollBar: true,
-      slideBlockStyle: {
-        height: slideBlockHeight,
-        top: slideBlockTop
-      }
+    setHasScrollBar(true);
+    setSlideBlockStyle({
+      height: slideBlockHeight,
+      top: slideBlockTop
     });
-  };
+  }, []);
 
-  render() {
-    const { children, className } = this.props;
-    return (
-      <div className={classNames(cssStyles.listContainer, className)}>
-        {this.state.hasScrollBar && (
-          <div className={cssStyles.scrollBar}>
-            <span style={{ ...this.state.slideBlockStyle }} />
-          </div>
-        )}
-        <div ref={this.listContainer} className={cssStyles.scrollContent}>
-          {children}
+  const handelScroll = React.useCallback(
+    e => {
+      parseDom(e.target);
+    },
+    [parseDom]
+  );
+
+  useEffect(() => {
+    getRef(container.current);
+
+    // parseDom();
+    const dom = container.current;
+    dom.addEventListener('scroll', handelScroll);
+    return () => dom.removeEventListener('scroll', handelScroll);
+  }, [getRef, handelScroll, parseDom]);
+
+  return (
+    <div className={classNames(cssStyles.container, className)}>
+      {hasScrollBar && (
+        <div className={cssStyles.scrollBar}>
+          <span style={{ ...slideBlockStyle }} />
         </div>
+      )}
+      <div ref={container} className={cssStyles.scrollContent}>
+        {children}
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default ScrollBarContainer;
