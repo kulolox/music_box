@@ -1,0 +1,43 @@
+.container {
+  .hidden {
+    display: none;
+  }
+  .title {
+    display: flex;
+    .label {
+      margin: 1px;
+      font-size: 12px;
+      width: 34px;
+    }
+  }
+  .footer {
+    span {
+      font-size: 12px;
+      &:not(:last-of-type) {
+        margin-right: 14px;
+      }
+    }
+  }
+  .box {
+    display: flex;
+    min-width: 648px;
+    .item {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 12px;
+      box-sizing: border-box;
+      width: 16px;
+      height: 35px;
+      background: #f3f3f3;
+      margin: 1px;
+    }
+    .select {
+      background: #669ced;
+    }
+    .limit {
+      background: #dcdcdc;
+      cursor: not-allowed;
+    }
+  }
+}

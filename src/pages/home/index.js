@@ -1,22 +1,17 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
 import Album from '@src/pages/home/Album';
 import Banner from '@src/pages/home/Banner';
 
-const useStyles = makeStyles(() => ({
-  home: {
-    paddingBottom: 60
-  }
-}));
-
 export default function Home() {
-  const classes = useStyles();
   return (
-    <Container maxWidth="md" className={classes.home}>
-      <Banner />
-      <Album />
-    </Container>
+    <Box pb={6}>
+      <Container maxWidth="md">
+        <Banner />
+        <Album />
+      </Container>
+    </Box>
   );
 }

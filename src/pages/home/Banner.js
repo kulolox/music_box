@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Swiper from '@src/components/Swiper';
-import Loading from '@src/components/Loading';
 import { getBanner } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 
@@ -24,7 +23,7 @@ export default function Banner() {
   const classes = useStyles();
   const request = useCallback(() => getBanner(0), []);
   const data = useGetData(request);
-  if (!data) return <Loading />;
+  if (!data) return null;
   const { banners } = data;
   return (
     <Swiper speed={3000} navigation>

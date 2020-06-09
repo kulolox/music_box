@@ -8,6 +8,7 @@ import Loading from '@src/components/Loading';
 
 const Home = React.lazy(() => import('@src/pages/home'));
 const Playlist = React.lazy(() => import('@src/pages/playlist'));
+// const Demo = React.lazy(() => import('@src/pages/demo'));
 
 const playerModel = new PlayerModel();
 
@@ -28,6 +29,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/playlist/:id?" exact component={Playlist} />
+              {/* <Route path="/demo" exact component={Demo} /> */}
             </Switch>
           </React.Suspense>
         </Router>

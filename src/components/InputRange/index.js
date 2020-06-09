@@ -36,9 +36,9 @@ class InputRange extends Component {
     setRangeStyle(this.range.current, value);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      setRangeStyle(this.range.current, nextProps.value);
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      setRangeStyle(this.range.current, this.props.value);
     }
   }
 

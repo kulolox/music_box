@@ -12,6 +12,7 @@ export default function ScrollBarContainer({
   const [slideBlockStyle, setSlideBlockStyle] = React.useState();
   const [hasScrollBar, setHasScrollBar] = React.useState(true);
 
+  // 解析滚动条
   const parseDom = React.useCallback((dom = container.current) => {
     if (!dom) return;
     const clientHeight = dom.clientHeight;
@@ -23,6 +24,7 @@ export default function ScrollBarContainer({
     const slideBlockTop =
       (scrollTop * (clientHeight - slideBlockHeight)) /
       (scrollHeight - clientHeight);
+
     if (isNaN(slideBlockTop)) {
       setHasScrollBar(false);
       return;
@@ -42,13 +44,15 @@ export default function ScrollBarContainer({
   );
 
   useEffect(() => {
+    if (!children) return;
+    // 滚动容器传出组件
     getRef(container.current);
 
     // parseDom();
     const dom = container.current;
     dom.addEventListener('scroll', handelScroll);
     return () => dom.removeEventListener('scroll', handelScroll);
-  }, [getRef, handelScroll, parseDom]);
+  }, [children, getRef, handelScroll, parseDom]);
 
   return (
     <div className={classNames(cssStyles.container, className)}>

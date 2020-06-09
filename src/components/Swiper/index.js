@@ -91,6 +91,7 @@ export default function Swiper({ speed = 4000, navigation = false, children }) {
       }
     };
   }
+
   return (
     <div className={classes.swiperBox}>
       <ReactSwiper

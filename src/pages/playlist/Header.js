@@ -16,7 +16,6 @@ import PlayCircleFilledWhiteOutlinedIcon from '@material-ui/icons/PlayCircleFill
 import { getSongs } from '@src/utils/api/get';
 import useGetData from '@src/hooks/useGetData';
 import { GlobalContext } from '@src/App';
-import Loading from '@src/components/Loading';
 import { checkMusic } from '@src/utils/tools';
 
 const useStyles = makeStyles(theme => ({
@@ -56,7 +55,7 @@ function Header({ data }) {
   const togglePlay = useCallback(() => playerModel.togglePlay(), [playerModel]);
   const source = useGetData(request);
 
-  if (!source) return <Loading />;
+  if (!source) return null;
 
   // 无法播放歌曲id列表
   const unPlay = privileges.filter(t => !checkMusic(t)).map(t => t.id);

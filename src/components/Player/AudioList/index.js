@@ -33,17 +33,29 @@ const AudioList = () => {
   const classes = useStyles();
   const [showList, toggleList] = useState(false);
   const { length } = playerModel;
+
+  const handleClick = React.useCallback(() => {
+    if (length === 0) {
+      alert('暂无歌曲');
+    } else {
+      toggleList(prevState => !prevState);
+    }
+  }, [length]);
+
   return (
     <React.Fragment>
-      <Fade in={showList}>
-        <Box className={classes.listContainer}>
-          <Mlist />
-          <Hidden xsDown>
-            <LyricBox />
-          </Hidden>
-        </Box>
-      </Fade>
-      <IconButton onClick={() => toggleList(prevState => !prevState)}>
+      {length !== 0 && (
+        <Fade in={showList}>
+          <Box className={classes.listContainer}>
+            <Mlist />
+            <Hidden xsDown>
+              <LyricBox />
+            </Hidden>
+          </Box>
+        </Fade>
+      )}
+
+      <IconButton onClick={handleClick}>
         <Badge badgeContent={length} color="secondary">
           <PlaylistPlayIcon />
         </Badge>
